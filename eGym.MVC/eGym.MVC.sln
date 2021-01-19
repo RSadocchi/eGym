@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.MVC", "eGym.MVC.csproj", "{F8D5A512-BF0D-4A84-A1BF-D83C9F60D941}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.Application", "..\eGym.Application\eGym.Application.csproj", "{7C81CF12-77FB-4FE3-9D60-F23943385AAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F8D5A512-BF0D-4A84-A1BF-D83C9F60D941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8D5A512-BF0D-4A84-A1BF-D83C9F60D941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8D5A512-BF0D-4A84-A1BF-D83C9F60D941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C81CF12-77FB-4FE3-9D60-F23943385AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C81CF12-77FB-4FE3-9D60-F23943385AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C81CF12-77FB-4FE3-9D60-F23943385AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C81CF12-77FB-4FE3-9D60-F23943385AAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
