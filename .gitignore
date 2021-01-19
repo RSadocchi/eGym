@@ -5,3 +5,6 @@ eGym.Core.SeedWork/bin/
 eGym.Core.SeedWork/obj/
 eGym.Core.Domain/bin/
 eGym.Core.Domain/obj/
+eGym.Common/obj/
+eGym.MVC/.vs/
+eGym.Common/bin/
