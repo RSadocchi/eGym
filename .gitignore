@@ -3,3 +3,5 @@ eGym.MVC/bin/
 eGym.Application/obj/
 eGym.Core.SeedWork/bin/
 eGym.Core.SeedWork/obj/
+eGym.Core.Domain/bin/
+eGym.Core.Domain/obj/
