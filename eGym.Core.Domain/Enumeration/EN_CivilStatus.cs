@@ -5,14 +5,13 @@ using System.Text;
 
 namespace eGym.Core.Domain
 {
-    public class EN_CivilStatus : Enumeration<int>
+    public class EN_CivilStatus : Enumeration<short>
     {
         public EN_CivilStatus() : base() { }
-        public EN_CivilStatus(int id, string code) : base(id, code) { }
+        public EN_CivilStatus(short id, string code) : base(id, code) { }
 
         public static IEnumerable<EN_CivilStatus> GetAll() => GetAll<EN_CivilStatus>();
-        public static EN_CivilStatus FromID(int id) => FromID<EN_CivilStatus>(id);
-        public static EN_CivilStatus FromCode(string code) => FromCode<EN_CivilStatus>(code);
+        public static EN_CivilStatus FromID(short id) => FromID<EN_CivilStatus>(id);
 
         public static EN_CivilStatus CelibeNubile = new EN_CivilStatus(1, "Celibe/Nubile");
         public static EN_CivilStatus Coniugato = new EN_CivilStatus(2, "Coniugato/a");

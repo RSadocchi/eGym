@@ -5,28 +5,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eGym.Core.Domain
 {
-    [Table(nameof(Anag_AddressRole), Schema = "dbo")]
-    public class Anag_AddressRole : Entity
+    [Table(nameof(Anag_MasterRole), Schema = "dbo")]
+    public class Anag_MasterRole : Entity
     {
         #region Db Columns
         [Key]
-        public int AdrR_ID { get; set; }
+        public int AngR_ID { get; set; }
         [Column(TypeName = "date")]
-        public DateTime AdrR_CreationDate { get; set; }
+        public DateTime AngR_CreationDate { get; set; }
         [Column(TypeName = "date")]
-        public DateTime? AdrR_DeadlineDate { get; set; }
-        public int AdrR_AddressID { get; set; }
-        public short AdrR_RoleID { get; set; }
+        public DateTime? AngR_DeadlineDate { get; set; }
+        public int AngR_AnagID { get; set; }
+        public short AngR_RoleID { get; set; }
         #endregion
 
         #region Virtuals
         public virtual Anag_Address Anag_Address { get; set; }
         [NotMapped]
-        public EN_AddressRole EN_AddressRole => EN_AddressRole.FromID(this.AdrR_RoleID);
+        public EN_AddressRole EN_AddressRole => EN_AddressRole.FromID(this.AngR_RoleID);
         #endregion
 
         #region Constructors
-        public Anag_AddressRole()
+        public Anag_MasterRole()
         {
 
         }

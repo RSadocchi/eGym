@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace eGym.Core.Domain
 {
     [Table(nameof(Anag_Master), Schema = "dbo")]
-    public partial class Anag_Master : Entity, IAggregateRoot
+    public class Anag_Master : Entity, IAggregateRoot
     {
         #region Db Columns
         [Key]
@@ -75,8 +75,6 @@ namespace eGym.Core.Domain
         /// <summary>
         /// Sesso
         /// </summary>
-        [Required]
-        [Column(TypeName = "nchar(1)")]
         public short Ang_GenderID { get; set; }
         /// <summary>
         /// Stato civile
@@ -96,7 +94,7 @@ namespace eGym.Core.Domain
         [NotMapped]
         public EN_Gender EN_Gender => EN_Gender.FromID(this.Ang_GenderID);
         [NotMapped]
-        public EN_CivilStatus EN_CivilStatus => EN_CivilStatus.FromID(this.Ang_CivilStatusID);
+        public EN_CivilStatus EN_CivilStatus => this.Ang_CivilStatusID.GetValueOrDefault() > 0 ? EN_CivilStatus.FromID(this.Ang_CivilStatusID.Value) : null;
         #endregion
 
         #region Constructors
@@ -106,7 +104,5 @@ namespace eGym.Core.Domain
             Anag_Contacts = new HashSet<Anag_Contact>();
         }
         #endregion
-
-        
     }
 }

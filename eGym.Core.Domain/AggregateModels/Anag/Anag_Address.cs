@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace eGym.Core.Domain
 {
     [Table(nameof(Anag_Address), Schema = "dbo")]
-    public partial class Anag_Address : Entity
+    public class Anag_Address : Entity
     {
         #region Db Columns
         [Key]

@@ -7,33 +7,31 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace eGym.Core.Domain
 {
     [Table(nameof(Anag_Contact), Schema = "dbo")]
-    public partial class Anag_Contact : Entity
+    public class Anag_Contact : Entity
     {
+        #region Db Columns
         [Key]
         public int Cnt_ID { get; set; }
-
         [Required]
         [MaxLength(150)]
         public string Cnt_Value { get; set; }
-
         public bool Cnt_DefaultInType { get; set; }
-
         public string Cnt_Note { get; set; }
-
         public int Cnt_AnagID { get; set; }
+        public short Cnt_TypeID { get; set; }
+        #endregion
 
-        [Required]
-        [Column(TypeName = "nchar(1)")]
-        public char Cnt_TypeID { get; set; }
+        #region Virtuals
+        public virtual Anag_Master Anag_Master { get; set; }
+        [NotMapped]
+        public EN_ContactType EN_ContactType => EN_ContactType.FromID(this.Cnt_TypeID);
+        #endregion
 
+        #region Constructors
         public Anag_Contact()
         {
 
         }
-
-        public virtual Anag_Master Anag_Master { get; set; }
-
-        [NotMapped]
-        public EN_ContactType EN_ContactType => EN_ContactType.FromID(this.Cnt_TypeID);
+        #endregion
     }
 }
