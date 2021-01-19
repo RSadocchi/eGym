@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.MVC", "eGym.MVC.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.Application", "..\eGym.Application\eGym.Application.csproj", "{7C81CF12-77FB-4FE3-9D60-F23943385AAA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C1ED9A3D-D1C7-4751-BB9E-0C3573ED1228}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.Core.SeedWork", "..\eGym.Core.SeedWork\eGym.Core.SeedWork.csproj", "{7A851DBC-C13C-4ABD-AD45-A29FC8671593}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +25,16 @@ Global
 		{7C81CF12-77FB-4FE3-9D60-F23943385AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C81CF12-77FB-4FE3-9D60-F23943385AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C81CF12-77FB-4FE3-9D60-F23943385AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A851DBC-C13C-4ABD-AD45-A29FC8671593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A851DBC-C13C-4ABD-AD45-A29FC8671593}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A851DBC-C13C-4ABD-AD45-A29FC8671593}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A851DBC-C13C-4ABD-AD45-A29FC8671593}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7A851DBC-C13C-4ABD-AD45-A29FC8671593} = {C1ED9A3D-D1C7-4751-BB9E-0C3573ED1228}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {84AAF9D8-752D-45C4-959C-0804E5C8A46B}
