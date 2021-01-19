@@ -22,5 +22,10 @@
   <ItemGroup>
     <ProjectReference Include="..\eGym.Core.SeedWork\eGym.Core.SeedWork.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+    <Folder Include="Context\" />
+  </ItemGroup>
   
 </Project>

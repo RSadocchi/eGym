@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.MVC", "eGym.MVC.csproj", "{F8D5A512-BF0D-4A84-A1BF-D83C9F60D941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGym.MVC", "eGym.MVC.csproj", "{F8D5A512-BF0D-4A84-A1BF-D83C9F60D941}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.Application", "..\eGym.Application\eGym.Application.csproj", "{7C81CF12-77FB-4FE3-9D60-F23943385AAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGym.Application", "..\eGym.Application\eGym.Application.csproj", "{7C81CF12-77FB-4FE3-9D60-F23943385AAA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C1ED9A3D-D1C7-4751-BB9E-0C3573ED1228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.Core.SeedWork", "..\eGym.Core.SeedWork\eGym.Core.SeedWork.csproj", "{7A851DBC-C13C-4ABD-AD45-A29FC8671593}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGym.Core.SeedWork", "..\eGym.Core.SeedWork\eGym.Core.SeedWork.csproj", "{7A851DBC-C13C-4ABD-AD45-A29FC8671593}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.Core.Domain", "..\eGym.Core.Domain\eGym.Core.Domain.csproj", "{6550F1BB-9223-4530-A6F2-F70B3AFBD260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGym.Core.Domain", "..\eGym.Core.Domain\eGym.Core.Domain.csproj", "{6550F1BB-9223-4530-A6F2-F70B3AFBD260}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{FE0D2A77-6095-429C-9FE4-D9A11A8BA814}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eGym.Common", "..\eGym.Common\eGym.Common.csproj", "{BEE7B051-DBFB-4170-8213-AA23EE409C3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eGym.Common", "..\eGym.Common\eGym.Common.csproj", "{BEE7B051-DBFB-4170-8213-AA23EE409C3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
