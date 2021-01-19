@@ -16,7 +16,7 @@ namespace eGym.Core.Domain
         [MaxLength(50)]
         public string CMS_GroupKey { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string CMS_ContextKey { get; set; }
         public short CMS_EditorTypeID { get; set; }
         public bool CMS_Active { get; set; }
