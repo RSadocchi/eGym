@@ -18,12 +18,17 @@ namespace eGym.Core.Domain
         [Required]
         [MaxLength(50)]
         public string CMS_ContextKey { get; set; }
+        [Required]
+        [Column(TypeName = "ntext")]
+        public string CMS_Value { get; set; }
+        [Required]
+        [MaxLength(5)]
+        public string CMS_Culture { get; set; }
         public short CMS_EditorTypeID { get; set; }
         public bool CMS_Active { get; set; }
         #endregion
 
         #region Virtuals
-        public virtual ICollection<CMS_Content> CMS_Contents { get; set; }
         public virtual ICollection<CMS_History> CMS_Histories { get; set; }
         [NotMapped]
         public EN_EditorType EN_EditorType => EN_EditorType.FromID(this.CMS_EditorTypeID);
@@ -32,7 +37,6 @@ namespace eGym.Core.Domain
         #region Constructors
         public CMS_Master()
         {
-            CMS_Contents = new HashSet<CMS_Content>();
             CMS_Histories = new HashSet<CMS_History>();
         }
         #endregion
