@@ -20,10 +20,5 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\eGym.Core.Security\eGym.Core.Security.csproj" />
-    <ProjectReference Include="..\eGym.Core.SeedWork\eGym.Core.SeedWork.csproj" />
-  </ItemGroup>
   
 </Project>

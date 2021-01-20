@@ -12,6 +12,7 @@ namespace eGym.Core.Domain
         [Key]
         public int Ath_ID { get; set; }
         public double? Ath_Weight { get; set; }
+        public double? Ath_Ranking { get; set; }
         public string Ath_Note { get; set; }
         public int? Ath_DivisionID { get; set; }
         public int Ath_LevelID { get; set; }

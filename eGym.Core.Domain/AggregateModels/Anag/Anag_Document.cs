@@ -21,7 +21,7 @@ namespace eGym.Core.Domain
         public DateTime? Doc_ExpiringDate { get; set; }
         [MaxLength(100)]
         public string Doc_Number { get; set; }
-        [Column(TypeName = "nchar(3)")]
+        [Column(TypeName = "char(3)")]
         public string Doc_EmissionCountry { get; set; }
         [MaxLength(100)]
         public string Doc_EmissionCity { get; set; }
