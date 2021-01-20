@@ -20,9 +20,9 @@ namespace eGym.Core.Domain
         #endregion
 
         #region Virtuals
-        public virtual Anag_Address Anag_Address { get; set; }
+        public virtual Anag_Master Anag_Master { get; set; }
         [NotMapped]
-        public EN_AddressRole EN_AddressRole => EN_AddressRole.FromID(this.AngR_RoleID);
+        public EN_AnagMasterRole EN_AnagMasterRole => EN_AnagMasterRole.FromID(this.AngR_RoleID);
         #endregion
 
         #region Constructors

@@ -77,10 +77,6 @@ namespace eGym.Core.Domain
         /// </summary>
         public short Ang_GenderID { get; set; }
         /// <summary>
-        /// Stato civile
-        /// </summary>
-        public short? Ang_CivilStatusID { get; set; }
-        /// <summary>
         /// Id utente del profilo di accesso
         /// </summary>
         public int? Ang_UserID { get; set; }
@@ -88,7 +84,7 @@ namespace eGym.Core.Domain
 
         #region Virtuals
         public virtual Athlete_Master Athlete_Master { get; set; }
-
+        public virtual Country Country { get; set; }
         /// <summary>
         /// Indirizzi
         /// </summary>
@@ -112,8 +108,6 @@ namespace eGym.Core.Domain
 
         [NotMapped]
         public EN_Gender EN_Gender => EN_Gender.FromID(this.Ang_GenderID);
-        [NotMapped]
-        public EN_CivilStatus EN_CivilStatus => this.Ang_CivilStatusID.GetValueOrDefault() > 0 ? EN_CivilStatus.FromID(this.Ang_CivilStatusID.Value) : null;
         #endregion
 
         #region Constructors

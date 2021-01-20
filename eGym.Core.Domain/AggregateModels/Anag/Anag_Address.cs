@@ -45,7 +45,8 @@ namespace eGym.Core.Domain
 
         #region Virtuals
         public virtual Anag_Master Anag_Master { get; set; }
-        public ICollection<Anag_AddressRole> Anag_AddressRoles { get; set; }
+        public virtual Country Country { get; set; }
+        public virtual ICollection<Anag_AddressRole> Anag_AddressRoles { get; set; }
         #endregion
 
         #region Constructors
