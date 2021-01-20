@@ -12,9 +12,9 @@ namespace eGym.Core.Domain
         [Key]
         public int AngR_ID { get; set; }
         [Column(TypeName = "date")]
-        public DateTime AngR_CreationDate { get; set; }
+        public DateTime AngR_StartDate { get; set; }
         [Column(TypeName = "date")]
-        public DateTime? AngR_DeadlineDate { get; set; }
+        public DateTime? AngR_EndDate { get; set; }
         public int AngR_AnagID { get; set; }
         public short AngR_RoleID { get; set; }
         #endregion

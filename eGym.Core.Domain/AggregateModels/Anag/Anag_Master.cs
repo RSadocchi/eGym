@@ -80,9 +80,15 @@ namespace eGym.Core.Domain
         /// Stato civile
         /// </summary>
         public short? Ang_CivilStatusID { get; set; }
+        /// <summary>
+        /// Id utente del profilo di accesso
+        /// </summary>
+        public int? Ang_UserID { get; set; }
         #endregion
 
         #region Virtuals
+        public virtual Athlete_Master Athlete_Master { get; set; }
+
         /// <summary>
         /// Indirizzi
         /// </summary>
@@ -91,6 +97,19 @@ namespace eGym.Core.Domain
         /// Contatti
         /// </summary>
         public virtual ICollection<Anag_Contact> Anag_Contacts { get; set; }
+        /// <summary>
+        /// Ruoli anagrafica
+        /// </summary>
+        public virtual ICollection<Anag_MasterRole> Anag_MasterRoles { get; set; }
+        /// <summary>
+        /// Ruoli societari
+        /// </summary>
+        public virtual ICollection<Anag_CorporateRole> Anag_CorporateRoles { get; set; }
+        /// <summary>
+        /// Documenti
+        /// </summary>
+        public virtual ICollection<Anag_Document> Anag_Documents { get; set; }
+
         [NotMapped]
         public EN_Gender EN_Gender => EN_Gender.FromID(this.Ang_GenderID);
         [NotMapped]
@@ -102,6 +121,9 @@ namespace eGym.Core.Domain
         {
             Anag_Addresses = new HashSet<Anag_Address>();
             Anag_Contacts = new HashSet<Anag_Contact>();
+            Anag_MasterRoles = new HashSet<Anag_MasterRole>();
+            Anag_CorporateRoles = new HashSet<Anag_CorporateRole>();
+            Anag_Documents = new HashSet<Anag_Document>();
         }
         #endregion
     }
