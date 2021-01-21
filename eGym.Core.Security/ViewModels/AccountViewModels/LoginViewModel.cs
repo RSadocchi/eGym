@@ -12,6 +12,7 @@ namespace eGym.Core.Security.Identity.ViewModels
         public string Culture { get; set; }
         public bool RememberMe { get; set; }
     }
+
     public class LoginPINViewModel
     {
         [Required]
