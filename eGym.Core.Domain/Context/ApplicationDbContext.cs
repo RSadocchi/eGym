@@ -3,6 +3,7 @@ using eGym.Core.Security.Identity;
 using eGym.Core.SeedWork;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,8 +11,11 @@ namespace eGym.Core.Domain
 {
     public class ApplicationDbContext : DbContext, IUnitOfWork
     {
-        public ApplicationDbContext() { }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) { }
+        readonly IConfiguration _configuration;
+        public string MigrationConnectionString { get; set; }
+
+        public ApplicationDbContext(IConfiguration configuration) { _configuration = configuration ?? throw new System.ArgumentNullException(nameof(configuration)); }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration) { _configuration = configuration ?? throw new System.ArgumentNullException(nameof(configuration)); }
 
         #region DbSets
         public DbSet<Anag_Address> Anag_Addresses { get; set; }
@@ -53,8 +57,21 @@ namespace eGym.Core.Domain
             if (!optionsBuilder.IsConfigured)
             {
 #if DEBUG
-                //questa serve per lanciare la migrazione da console di gestione pacchetti
-                optionsBuilder.UseSqlServer("Server=RSADO\\SQLEXPRESS; Initial Catalog=eGym.Devlopment; Integrated Security = True; MultipleActiveResultSets=True;");
+                var connString = string.Empty;
+                switch (System.Environment.MachineName)
+                {
+                    case "BUBBLES":
+                    case "RSADO":
+                        connString = string.Format(_configuration.GetConnectionString("Default"), $"{System.Environment.MachineName}\\SQLEXPRESS");
+                        break;
+                    default:
+                        connString = string.Format(_configuration.GetConnectionString("Default"), $"(local)");
+                        break;
+                }
+
+                optionsBuilder.UseSqlServer(connString);
+#else
+                optionsBuilder.UseSqlServer(MigrationConnectionString ?? _configuration.GetConnectionString("Default"));
 #endif
             }
         }

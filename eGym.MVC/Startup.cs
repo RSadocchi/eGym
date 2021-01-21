@@ -64,13 +64,30 @@ namespace eGym.MVC
             #endregion
 
             #region DB CONTEXT
-            _securityConnectionString = Configuration.GetConnectionString("Security");
+
+#if DEBUG
+            switch (System.Environment.MachineName)
+            {
+                case "BUBBLES":
+                case "RSADO":
+                    _securityConnectionString = string.Format(Configuration.GetConnectionString("Security"), $"{System.Environment.MachineName}\\SQLEXPRESS");
+                    _applicationConnectionString = string.Format(Configuration.GetConnectionString("Default"), $"{System.Environment.MachineName}\\SQLEXPRESS");
+                    break;
+                default:
+                    _securityConnectionString = string.Format(Configuration.GetConnectionString("Security"), "(local)");
+                    _applicationConnectionString = string.Format(Configuration.GetConnectionString("Default"), "(local)");
+                    break;
+            }
+#else
+                    _securityConnectionString = sConfiguration.GetConnectionString("Security");
+                    _applicationConnectionString = Configuration.GetConnectionString("Default");
+#endif
+
             Console.WriteLine($" === SecurityConString: {_securityConnectionString}");
             services
                 .AddDbContext<SecurityDbContext>(o =>
                     o.UseSqlServer(_securityConnectionString, opt => opt.MigrationsAssembly(typeof(SecurityDbContext).Assembly.GetName().Name)));
 
-            _applicationConnectionString = Configuration.GetConnectionString("Default");
             Console.WriteLine($" === ApplicationConString: {_applicationConnectionString}");
             services
                 .AddDbContext<ApplicationDbContext>(o =>

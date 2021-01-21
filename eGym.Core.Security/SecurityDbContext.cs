@@ -31,7 +31,23 @@ namespace eGym.Core.Security
             optionsBuilder.EnableSensitiveDataLogging();
             if (!optionsBuilder.IsConfigured)
             {
+#if DEBUG
+                var connString = string.Empty;
+                switch (System.Environment.MachineName)
+                {
+                    case "BUBBLES":
+                    case "RSADO":
+                        connString = string.Format(_configuration.GetConnectionString("Security"), $"{System.Environment.MachineName}\\SQLEXPRESS");
+                        break;
+                    default:
+                        connString = string.Format(_configuration.GetConnectionString("Security"), $"(local)");
+                        break;
+                }
+
+                optionsBuilder.UseSqlServer(connString);
+#else
                 optionsBuilder.UseSqlServer(MigrationConnectionString ?? _configuration.GetConnectionString("Security"));
+#endif
             }
         }
 
