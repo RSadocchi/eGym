@@ -21,7 +21,18 @@ namespace eGym.Core.Domain
 
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.EnableSensitiveDataLogging();
+            if (!optionsBuilder.IsConfigured)
+            {
+#if DEBUG
+                //questa serve per lanciare la migrazione da console di gestione pacchetti
+                optionsBuilder.UseSqlServer("Server=RSADO\\SQLEXPRESS; Initial Catalog=eGym.Devlopment; Integrated Security = True; MultipleActiveResultSets=True;");
+#endif
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -31,12 +42,13 @@ namespace eGym.Core.Domain
             builder.ApplyConfiguration(new Security.Configuration.SecurityUserClaimConfiguration());
             builder.ApplyConfiguration(new Security.Configuration.SecurityUserRoleConfiguration());
             builder.ApplyConfiguration(new Security.Configuration.SecurityUserTokenConfiguration());
+            builder.ApplyConfiguration(new Security.Configuration.SecurityUserLoginConfiguration());
             builder.ApplyConfiguration(new Security.Configuration.SecurityPasswordHistoryConfiguration());
 
             builder.Entity<Country>(e =>
             {
                 e.HasIndex(p => p.Country_IsoCode).IsUnique(true).IsClustered(false);
-                e.HasData(Context.SeedData.CountrySeedData.Data);
+                e.HasData(Context.SeedData.TabSchemaSeedData.Country);
             });
 
             builder.Entity<CMS_History>(e =>
@@ -56,7 +68,7 @@ namespace eGym.Core.Domain
 
             builder.Entity<Anag_AddressRole>(e =>
             {
-                e.HasOne(p => p.Anag_Address).WithMany(p => p.Anag_AddressRoles).HasForeignKey(p => p.AdrR_RoleID).OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(p => p.Anag_Address).WithMany(p => p.Anag_AddressRoles).HasForeignKey(p => p.AdrR_AddressID).OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<Anag_Address>(e =>
@@ -109,10 +121,20 @@ namespace eGym.Core.Domain
                 e.HasOne(p => p.Sport_Division).WithMany(p => p.Sport_DivisionXSports).HasForeignKey(p => p.DXS_DivisionID).OnDelete(DeleteBehavior.Cascade);
             });
 
+            builder.Entity<Sport_DivisionLocalized>(e =>
+            {
+                e.HasOne(p => p.Sport_Division).WithMany(p => p.Sport_DivisionLocalizeds).HasForeignKey(p => p.SDL_DivisionID).OnDelete(DeleteBehavior.Cascade);
+            });
+
             builder.Entity<Sport_LevelXSport>(e =>
             {
                 e.HasOne(p => p.Sport_Master).WithMany(p => p.Sport_LevelXSports).HasForeignKey(p => p.LXS_SportID).OnDelete(DeleteBehavior.Cascade);
                 e.HasOne(p => p.Sport_Level).WithMany(p => p.Sport_LevelXSports).HasForeignKey(p => p.LXS_LevelID).OnDelete(DeleteBehavior.Cascade);
+            });
+
+            builder.Entity<Sport_LevelLocalized>(e =>
+            {
+                e.HasOne(p => p.Sport_Level).WithMany(p => p.Sport_LevelLocalizeds).HasForeignKey(p => p.SLL_LevelID).OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<Sport_Schedule>(e =>
@@ -120,9 +142,18 @@ namespace eGym.Core.Domain
                 e.HasOne(p => p.Sport_Master).WithMany(p => p.Sport_Schedules).HasForeignKey(p => p.SS_SportID).OnDelete(DeleteBehavior.Cascade);
             });
 
+            builder.Entity<Sport_EventResultLocalized>(e =>
+            {
+                e.HasOne(p => p.Sport_EventResult).WithMany(p => p.Sport_EventResultLocalizeds).HasForeignKey(p => p.SerL_EventResultID).OnDelete(DeleteBehavior.Cascade);
+            });
+
+            builder.Entity<Sport_EventResultTypeLocalized>(e =>
+            {
+                e.HasOne(p => p.Sport_EventResultType).WithMany(p => p.Sport_EventResultTypeLocalizeds).HasForeignKey(p => p.SertL_EventResultTypeID).OnDelete(DeleteBehavior.Cascade);
+            });
 
 
-            base.OnModelCreating(builder);
+            //base.OnModelCreating(builder);
         }
 
         public IDbTransaction BeginTransaction() => new DbContextTransactionConverter(Database.BeginTransaction());

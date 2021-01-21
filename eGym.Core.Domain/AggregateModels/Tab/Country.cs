@@ -10,7 +10,6 @@ namespace eGym.Core.Domain
     {
         #region Db Columns
         [Key] 
-        public int Country_ID { get; set; }
         [Column(TypeName = "char(3)")]
         [MaxLength(3)] 
         public string Country_IsoCode { get; set; }

@@ -15,12 +15,11 @@ namespace eGym.Core.Domain
         [MaxLength(50)]
         public string SL_Name { get; set; }
         public string SL_Description { get; set; }
-        public int? SL_MinAge { get; set; }
-        public int? SL_MaxAge { get; set; }
         public string SL_Note { get; set; }
         #endregion
 
         #region Virtuals
+        public virtual ICollection<Sport_LevelLocalized> Sport_LevelLocalizeds { get; set; }
         public virtual ICollection<Sport_LevelXSport> Sport_LevelXSports { get; set; }
         public virtual ICollection<Athlete_LevelXAthlete> Athlete_LevelXAthletes { get; set; }
         #endregion
@@ -28,6 +27,7 @@ namespace eGym.Core.Domain
         #region Construnctors
         public Sport_Level()
         {
+            Sport_LevelLocalizeds = new HashSet<Sport_LevelLocalized>();
             Sport_LevelXSports = new HashSet<Sport_LevelXSport>();
             Athlete_LevelXAthletes = new HashSet<Athlete_LevelXAthlete>();
         }

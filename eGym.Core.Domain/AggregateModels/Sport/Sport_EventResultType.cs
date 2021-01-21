@@ -1,4 +1,5 @@
 ﻿using eGym.Core.SeedWork;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,22 +19,38 @@ namespace eGym.Core.Domain
         #endregion
 
         #region Virtuals
-
+        public virtual ICollection<Sport_EventResultTypeLocalized> Sport_EventResultTypeLocalizeds { get; set; }
         #endregion
 
         #region Construnctors
         public Sport_EventResultType()
         {
-
+            Sport_EventResultTypeLocalizeds = new HashSet<Sport_EventResultTypeLocalized>();
         }
         #endregion
+    }
 
-        /*
-         * public static EN_ResultForTypes Decision = new EN_ResultForTypes(10, "Decisione unanime");
-         * public static EN_ResultForTypes SplitDescision = new EN_ResultForTypes(20, "Split decision");
-         * public static EN_ResultForTypes TKO = new EN_ResultForTypes(30, "TKO");
-         * public static EN_ResultForTypes KO = new EN_ResultForTypes(30, "KO");
-         * public static EN_ResultForTypes Submission = new EN_ResultForTypes(40, "Sottomissione");
-         */
+    [Table(nameof(Sport_EventResultTypeLocalized), Schema = "conf")]
+    public class Sport_EventResultTypeLocalized : Entity
+    {
+        [Key]
+        public int SertL_ID { get; set; }
+        [Required]
+        [MaxLength(5)]
+        public string SertL_Culture { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string SertL_Name { get; set; }
+        public string SertL_Description { get; set; }
+        public int SertL_EventResultTypeID { get; set; }
+
+
+        public virtual Sport_EventResultType Sport_EventResultType { get; set; }
+
+
+        public Sport_EventResultTypeLocalized()
+        {
+
+        }
     }
 }

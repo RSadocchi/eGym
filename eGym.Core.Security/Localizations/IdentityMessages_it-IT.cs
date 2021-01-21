@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aran.Security
+namespace eGym.Core.Security.Identity
 {
     public class CustomIdentityErrorDescriber_IT : IdentityErrorDescriber
     {

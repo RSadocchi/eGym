@@ -12,6 +12,6 @@ namespace eGym.Core.Security.Identity
         public DateTime ChangedDateTime { get; set; }
 
 
-        public virtual User User { get; set; }
+        public User User { get; set; }
     }
 }

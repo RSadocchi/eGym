@@ -1,4 +1,5 @@
 ﻿using eGym.Core.SeedWork;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,20 +20,14 @@ namespace eGym.Core.Domain
         #endregion
 
         #region Virtuals
-        
+        public virtual ICollection<Sport_EventResultLocalized> Sport_EventResultLocalizeds { get; set; }
         #endregion
 
         #region Construnctors
         public Sport_EventResult()
         {
-            
+            Sport_EventResultLocalizeds = new HashSet<Sport_EventResultLocalized>();
         }
         #endregion
-
-        /*
-         * public static EN_ResultTypes Lose = new EN_ResultTypes(10, "Sconfitta");
-         * public static EN_ResultTypes Pair = new EN_ResultTypes(20, "Pareggio");
-         * public static EN_ResultTypes Win = new EN_ResultTypes(30, "Vittoria");
-         */
     }
 }
