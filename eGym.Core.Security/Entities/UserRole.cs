@@ -5,5 +5,8 @@ using System.ComponentModel.DataAnnotations;
 namespace eGym.Core.Security.Identity
 {
     public class UserRole : Microsoft.AspNetCore.Identity.IdentityUserRole<int>
-    { }
+    {
+        [Key]
+        public int Id { get; set; }
+    }
 }

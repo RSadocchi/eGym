@@ -3,22 +3,47 @@ using eGym.Core.Security.Identity;
 using eGym.Core.SeedWork;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace eGym.Core.Domain
 {
-    public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>, IUnitOfWork
+    public class ApplicationDbContext : DbContext, IUnitOfWork
     {
         public ApplicationDbContext() { }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) { }
 
         #region DbSets
-        public DbSet<PasswordHistory> PasswordHistory { get; set; }
+        public DbSet<Anag_Address> Anag_Addresses { get; set; }
+        public DbSet<Anag_AddressRole> Anag_AddressRoles { get; set; }
+        public DbSet<Anag_Contact> Anag_Contacts { get; set; }
+        public DbSet<Anag_CorporateRole> Anag_CorporateRoles { get; set; }
+        public DbSet<Anag_Document> Anag_Documents { get; set; }
+        public DbSet<Anag_Master> Anag_Masters { get; set; }
+        public DbSet<Anag_MasterRole> Anag_MasterRoles { get; set; }
 
+        public DbSet<Athlete_DivisionXAthlete> Athlete_DivisionXAthletes { get; set; }
+        public DbSet<Athlete_LevelXAthlete> Athlete_LevelXAthletes { get; set; }
+        public DbSet<Athlete_Master> Athlete_Masters { get; set; }
+        public DbSet<Athlete_WeightXAthlete> Athlete_WeightXAthletes { get; set; }
+
+        public DbSet<CMS_History> CMS_Histories { get; set; }
+        public DbSet<CMS_Master> CMS_Masters { get; set; }
+
+        public DbSet<Sport_Division> Sport_Divisions { get; set; }
+        public DbSet<Sport_DivisionLocalized> Sport_DivisionLocalizeds { get; set; }
+        public DbSet<Sport_DivisionXSport> Sport_DivisionXSports { get; set; }
+        public DbSet<Sport_EventResult> Sport_EventResults { get; set; }
+        public DbSet<Sport_EventResultLocalized> Sport_EventResultLocalizeds { get; set; }
+        public DbSet<Sport_EventResultType> Sport_EventResultTypes { get; set; }
+        public DbSet<Sport_EventResultTypeLocalized> Sport_EventResultTypeLocalizeds { get; set; }
+        public DbSet<Sport_Level> Sport_Levels { get; set; }
+        public DbSet<Sport_LevelLocalized> Sport_LevelLocalizeds { get; set; }
+        public DbSet<Sport_LevelXSport> Sport_LevelXSports { get; set; }
+        public DbSet<Sport_Master> Sport_Masters { get; set; }
+        public DbSet<Sport_Schedule> Sport_Schedules { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
@@ -36,15 +61,7 @@ namespace eGym.Core.Domain
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new Security.Configuration.SecurityUserConfiguration());
-            builder.ApplyConfiguration(new Security.Configuration.SecurityRoleConfiguration());
-            builder.ApplyConfiguration(new Security.Configuration.SecurityRoleClaimConfiguration());
-            builder.ApplyConfiguration(new Security.Configuration.SecurityUserClaimConfiguration());
-            builder.ApplyConfiguration(new Security.Configuration.SecurityUserRoleConfiguration());
-            builder.ApplyConfiguration(new Security.Configuration.SecurityUserTokenConfiguration());
-            builder.ApplyConfiguration(new Security.Configuration.SecurityUserLoginConfiguration());
-            builder.ApplyConfiguration(new Security.Configuration.SecurityPasswordHistoryConfiguration());
-
+            
             builder.Entity<Country>(e =>
             {
                 e.HasIndex(p => p.Country_IsoCode).IsUnique(true).IsClustered(false);
@@ -74,7 +91,7 @@ namespace eGym.Core.Domain
             builder.Entity<Anag_Address>(e =>
             {
                 e.HasOne(p => p.Anag_Master).WithMany(p => p.Anag_Addresses).HasForeignKey(p => p.Adr_AnagID).OnDelete(DeleteBehavior.Cascade);
-                e.HasOne(p => p.Country).WithMany(p => p.Anag_Addresses).HasForeignKey(p => p.Adr_Country);
+                e.HasOne(p => p.Country).WithMany(p => p.Anag_Addresses).HasForeignKey(p => p.Adr_Country).OnDelete(DeleteBehavior.NoAction);
             });
 
             builder.Entity<Anag_Contact>(e =>
@@ -89,7 +106,7 @@ namespace eGym.Core.Domain
 
             builder.Entity<Anag_Master>(e =>
             {
-                e.HasOne(p => p.Country).WithMany(p => p.Anag_Masters).HasForeignKey(p => p.Ang_BirthCountry);
+                e.HasOne(p => p.Country).WithMany(p => p.Anag_Masters).HasForeignKey(p => p.Ang_BirthCountry).OnDelete(DeleteBehavior.NoAction);
             });
 
             builder.Entity<Athlete_Master>(e =>
@@ -121,9 +138,15 @@ namespace eGym.Core.Domain
                 e.HasOne(p => p.Sport_Division).WithMany(p => p.Sport_DivisionXSports).HasForeignKey(p => p.DXS_DivisionID).OnDelete(DeleteBehavior.Cascade);
             });
 
+            builder.Entity<Sport_Division>(e =>
+            {
+                e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_Division);
+            });
+
             builder.Entity<Sport_DivisionLocalized>(e =>
             {
                 e.HasOne(p => p.Sport_Division).WithMany(p => p.Sport_DivisionLocalizeds).HasForeignKey(p => p.SDL_DivisionID).OnDelete(DeleteBehavior.Cascade);
+                e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_DivisionLocalized);
             });
 
             builder.Entity<Sport_LevelXSport>(e =>
@@ -132,9 +155,15 @@ namespace eGym.Core.Domain
                 e.HasOne(p => p.Sport_Level).WithMany(p => p.Sport_LevelXSports).HasForeignKey(p => p.LXS_LevelID).OnDelete(DeleteBehavior.Cascade);
             });
 
+            builder.Entity<Sport_Level>(e =>
+            {
+                e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_Level);
+            });
+
             builder.Entity<Sport_LevelLocalized>(e =>
             {
                 e.HasOne(p => p.Sport_Level).WithMany(p => p.Sport_LevelLocalizeds).HasForeignKey(p => p.SLL_LevelID).OnDelete(DeleteBehavior.Cascade);
+                e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_LevelLocalized);
             });
 
             builder.Entity<Sport_Schedule>(e =>
@@ -142,14 +171,26 @@ namespace eGym.Core.Domain
                 e.HasOne(p => p.Sport_Master).WithMany(p => p.Sport_Schedules).HasForeignKey(p => p.SS_SportID).OnDelete(DeleteBehavior.Cascade);
             });
 
+            builder.Entity<Sport_EventResult>(e =>
+            {
+                e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_EventResult);
+            });
+
             builder.Entity<Sport_EventResultLocalized>(e =>
             {
                 e.HasOne(p => p.Sport_EventResult).WithMany(p => p.Sport_EventResultLocalizeds).HasForeignKey(p => p.SerL_EventResultID).OnDelete(DeleteBehavior.Cascade);
+                e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_EventResultLocalized);
+            });
+
+            builder.Entity<Sport_EventResultType>(e =>
+            {
+                e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_EventResultType);
             });
 
             builder.Entity<Sport_EventResultTypeLocalized>(e =>
             {
                 e.HasOne(p => p.Sport_EventResultType).WithMany(p => p.Sport_EventResultTypeLocalizeds).HasForeignKey(p => p.SertL_EventResultTypeID).OnDelete(DeleteBehavior.Cascade);
+                e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_EventResultTypeLocalized);
             });
 
 

@@ -1,4 +1,5 @@
 using eGym.Core.Domain;
+using eGym.Core.Security;
 using eGym.Core.Security.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -63,6 +64,12 @@ namespace eGym.MVC
             #endregion
 
             #region DB CONTEXT
+            _securityConnectionString = Configuration.GetConnectionString("Security");
+            Console.WriteLine($" === SecurityConString: {_securityConnectionString}");
+            services
+                .AddDbContext<SecurityDbContext>(o =>
+                    o.UseSqlServer(_securityConnectionString, opt => opt.MigrationsAssembly(typeof(SecurityDbContext).Assembly.GetName().Name)));
+
             _applicationConnectionString = Configuration.GetConnectionString("Default");
             Console.WriteLine($" === ApplicationConString: {_applicationConnectionString}");
             services
@@ -89,7 +96,7 @@ namespace eGym.MVC
                 .AddUserManager<UserManager>()
                 .AddRoleManager<RoleManager>()
                 .AddSignInManager<SignInManager>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<SecurityDbContext>()
                 .AddDefaultTokenProviders()
                 .AddErrorDescriber<CustomIdentityErrorDescriber_IT>();
             #endregion

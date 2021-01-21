@@ -16,9 +16,28 @@ namespace eGym.Core.Security.Configuration
             builder.Property(e => e.Culture).IsRequired(false);
             builder.Property(e => e.PasswordHash).HasColumnType("ntext");
 
-            var admin = new User
+            var auto = new User
             {
                 Id = 1,
+                Culture = "it-IT",
+                Disabled = true,
+                Email = "dev@digitalbubbles.cloud",
+                NormalizedEmail = "dev@digitalbubbles.cloud".ToUpper(),
+                EmailConfirmed = true,
+                EmailConfirmedDateTime = System.DateTime.MinValue,
+                UserName = "auto",
+                NormalizedUserName = "auto".ToUpper(),
+                LockoutEnabled = false,
+                TwoFactorEnabled = false,
+                PasswordExpirationDateTime = System.DateTime.Now.AddYears(100),
+                SecurityStamp = System.Guid.NewGuid().ToString()
+            };
+            var autoPasswordHash = new PasswordHasher<User>().HashPassword(auto, System.Guid.NewGuid().ToString());
+            auto.PasswordHash = autoPasswordHash;
+            
+            var admin = new User
+            {
+                Id = 2,
                 Culture = "it-IT",
                 Disabled = false,
                 Email = "info@digitalbubbles.cloud",
@@ -35,28 +54,7 @@ namespace eGym.Core.Security.Configuration
             var adminPasswordHash = new PasswordHasher<User>().HashPassword(admin, "dgtBu88l3$");
             admin.PasswordHash = adminPasswordHash;
 
-            //builder.HasData(admin);
-
-            var auto = new User
-            {
-                Id = 2,
-                Culture = "it-IT",
-                Disabled = true,
-                Email = "dev@digitalbubbles.cloud",
-                NormalizedEmail = "dev@digitalbubbles.cloud".ToUpper(),
-                EmailConfirmed = true,
-                EmailConfirmedDateTime = System.DateTime.MinValue,
-                UserName = "auto",
-                NormalizedUserName = "auto".ToUpper(),
-                LockoutEnabled = false,
-                TwoFactorEnabled = false,
-                PasswordExpirationDateTime = System.DateTime.Now.AddYears(100),
-                SecurityStamp = System.Guid.NewGuid().ToString()
-            };
-            var autoPasswordHash = new PasswordHasher<User>().HashPassword(auto, System.Guid.NewGuid().ToString());
-            auto.PasswordHash = autoPasswordHash;
-
-            builder.HasData(admin, auto);
+            builder.HasData(auto, admin);
         }
     }
 
@@ -67,7 +65,12 @@ namespace eGym.Core.Security.Configuration
             builder.ToTable(name: nameof(Role), schema: "Security");
             builder.HasKey(prop => prop.Id);
             builder.Property(e => e.Id).HasColumnName("RoleID");
-            builder.HasData(EN_RoleType.GetAll().Select(t => new Role() { Id = t.ID, Name = t.Code, NormalizedName = t.Code.ToUpper() }));
+            builder.HasData(
+                new Role() { Id = 1, Name = Const_RoleTypes.Auto, NormalizedName = Const_RoleTypes.Auto.ToUpper() },
+                new Role() { Id = 2, Name = Const_RoleTypes.SysAdmin, NormalizedName = Const_RoleTypes.SysAdmin.ToUpper() },
+                new Role() { Id = 3, Name = Const_RoleTypes.Administarator, NormalizedName = Const_RoleTypes.Administarator.ToUpper() },
+                new Role() { Id = 4, Name = Const_RoleTypes.User, NormalizedName = Const_RoleTypes.User.ToUpper() }
+                );
         }
     }
 
@@ -82,16 +85,16 @@ namespace eGym.Core.Security.Configuration
             builder.Property(e => e.ClaimType).HasMaxLength(50).IsRequired();
             builder.Property(e => e.ClaimValue).HasMaxLength(50).IsRequired();
             builder.HasData(
-                new RoleClaim { Id = 1, RoleId = EN_RoleType.Auto.ID, ClaimType = Const_ClaimTypes.AUTO, ClaimValue = Const_ClaimValues.DefaultValue },
+                new RoleClaim { Id = 1, RoleId = 1, ClaimType = Const_ClaimTypes.AUTO, ClaimValue = Const_ClaimValues.DefaultValue },
 
-                new RoleClaim { Id = 2, RoleId = EN_RoleType.SysAdmin.ID, ClaimType = Const_ClaimTypes.GOD, ClaimValue = Const_ClaimValues.DefaultValue },
-                new RoleClaim { Id = 3, RoleId = EN_RoleType.SysAdmin.ID, ClaimType = Const_ClaimTypes.ADMINISTRATOR, ClaimValue = Const_ClaimValues.DefaultValue },
-                new RoleClaim { Id = 4, RoleId = EN_RoleType.SysAdmin.ID, ClaimType = Const_ClaimTypes.USER, ClaimValue = Const_ClaimValues.DefaultValue },
+                new RoleClaim { Id = 2, RoleId = 2, ClaimType = Const_ClaimTypes.GOD, ClaimValue = Const_ClaimValues.DefaultValue },
+                new RoleClaim { Id = 3, RoleId = 2, ClaimType = Const_ClaimTypes.ADMINISTRATOR, ClaimValue = Const_ClaimValues.DefaultValue },
+                new RoleClaim { Id = 4, RoleId = 2, ClaimType = Const_ClaimTypes.USER, ClaimValue = Const_ClaimValues.DefaultValue },
 
-                new RoleClaim { Id = 5, RoleId = EN_RoleType.Administarator.ID, ClaimType = Const_ClaimTypes.ADMINISTRATOR, ClaimValue = Const_ClaimValues.DefaultValue },
-                new RoleClaim { Id = 6, RoleId = EN_RoleType.Administarator.ID, ClaimType = Const_ClaimTypes.USER, ClaimValue = Const_ClaimValues.DefaultValue },
+                new RoleClaim { Id = 5, RoleId = 3, ClaimType = Const_ClaimTypes.ADMINISTRATOR, ClaimValue = Const_ClaimValues.DefaultValue },
+                new RoleClaim { Id = 6, RoleId = 3, ClaimType = Const_ClaimTypes.USER, ClaimValue = Const_ClaimValues.DefaultValue },
 
-                new RoleClaim { Id = 7, RoleId = EN_RoleType.User.ID, ClaimType = Const_ClaimTypes.USER, ClaimValue = Const_ClaimValues.DefaultValue }
+                new RoleClaim { Id = 7, RoleId = 4, ClaimType = Const_ClaimTypes.USER, ClaimValue = Const_ClaimValues.DefaultValue }
             );
         }
     }
@@ -113,7 +116,7 @@ namespace eGym.Core.Security.Configuration
     {
         public void Configure(EntityTypeBuilder<UserLogin> builder)
         {
-            builder.HasNoKey();
+            builder.HasKey(p => p.Id);
             builder.ToTable(name: nameof(UserLogin), schema: "Security");
             builder.Property(e => e.UserId).HasColumnName("UserID");
         }
@@ -124,12 +127,12 @@ namespace eGym.Core.Security.Configuration
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
             builder.ToTable(name: nameof(UserRole), schema: "Security");
-            builder.HasNoKey();
+            builder.HasKey(p => p.Id);
             builder.Property(e => e.UserId).HasColumnName("UserID");
             builder.Property(e => e.RoleId).HasColumnName("RoleID");
             builder.HasData(
-                new UserRole { RoleId = 1, UserId = 2 },
-                new UserRole { RoleId = 2, UserId = 1 } 
+                new UserRole { Id = 1, RoleId = 1, UserId = 1 },
+                new UserRole { Id = 2, RoleId = 2, UserId = 2 }
                 );
         }
     }
@@ -139,7 +142,7 @@ namespace eGym.Core.Security.Configuration
         public void Configure(EntityTypeBuilder<UserToken> builder)
         {
             builder.ToTable(name: nameof(UserToken), schema: "Security");
-            builder.HasNoKey();
+            builder.HasKey(p => p.Id);
             builder.Property(e => e.UserId).HasColumnName("UserID");
         }
     }

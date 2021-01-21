@@ -7,25 +7,26 @@ namespace eGym.Core.Security.Identity
 {
     public class User : Microsoft.AspNetCore.Identity.IdentityUser<int>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public bool Disabled { get; set; }
-        public Nullable<DateTime> EmailConfirmedDateTime { get; set; }
-        public Nullable<DateTime> PhoneNumberConfirmedDateTime { get; set; }
         public string PINHash { get; set; }
+        [MaxLength(5)]
         public string Culture { get; set; }
-        public Nullable<DateTime> PasswordExpirationDateTime { get; set; }
-        public string Avatar { get; set; }
-        [NotMapped]
-        public string CompleteName { get => $"{FirstName} {LastName}"; }
+        public DateTime? EmailConfirmedDateTime { get; set; }
+        public DateTime? PhoneNumberConfirmedDateTime { get; set; }
+        public DateTime? PasswordExpirationDateTime { get; set; }
+        public DateTime? PrivacyAcceptanceDateTime { get; set; }
+        public DateTime? PolicyAcceptanceDateTime { get; set; }
+        public string TwoFactorTokenProviders { get; set; }
 
 
         public virtual ICollection<PasswordHistory> PasswordHistory { get; set; }
+        public virtual ICollection<UserVoucher> UserVouchers { get; set; }
 
 
         public User() : base()
         {
-            PasswordHistory = new List<PasswordHistory>();
+            PasswordHistory = new HashSet<PasswordHistory>();
+            UserVouchers = new HashSet<UserVoucher>();
         }
 
         public static explicit operator Microsoft.AspNetCore.Identity.IdentityUser(User Value)
