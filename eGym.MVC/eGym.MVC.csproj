@@ -50,10 +50,44 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\css\admin\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="nlog.config" />
+    <None Include="wwwroot\js\admin\apps\contact.js" />
+    <None Include="wwwroot\js\admin\apps\custom-mailbox.js" />
+    <None Include="wwwroot\js\admin\apps\invoice.js" />
+    <None Include="wwwroot\js\admin\apps\mailbox-chat.js" />
+    <None Include="wwwroot\js\admin\apps\notes.js" />
+    <None Include="wwwroot\js\admin\apps\scrumboard.js" />
+    <None Include="wwwroot\js\admin\apps\todoList.js" />
+    <None Include="wwwroot\js\admin\authentication\form-1.js" />
+    <None Include="wwwroot\js\admin\authentication\form-2.js" />
+    <None Include="wwwroot\js\admin\clipboard\clipboard.min.js" />
+    <None Include="wwwroot\js\admin\components\custom-carousel.js" />
+    <None Include="wwwroot\js\admin\components\custom-countdown.js" />
+    <None Include="wwwroot\js\admin\components\custom-counter.js" />
+    <None Include="wwwroot\js\admin\components\notification\custom-snackbar.js" />
+    <None Include="wwwroot\js\admin\components\session-timeout\bootstrap-session-timeout.js" />
+    <None Include="wwwroot\js\admin\components\session-timeout\custom-bootstrap_session_timeout.js" />
+    <None Include="wwwroot\js\admin\components\ui-accordions.js" />
+    <None Include="wwwroot\js\admin\dashboard\dash_1.js" />
+    <None Include="wwwroot\js\admin\dashboard\dash_2.js" />
+    <None Include="wwwroot\js\admin\elements\custom-search.js" />
+    <None Include="wwwroot\js\admin\elements\popovers.js" />
+    <None Include="wwwroot\js\admin\elements\tooltip.js" />
+    <None Include="wwwroot\js\admin\forms\bootstrap_validation\bs_validation_script.js" />
+    <None Include="wwwroot\js\admin\forms\custom-clipboard.js" />
+    <None Include="wwwroot\js\admin\ie11fix\fn.fix-padStart.js" />
+    <None Include="wwwroot\js\admin\libs\jquery-3.1.1.min.js" />
+    <None Include="wwwroot\js\admin\libs\jquery-ui.js" />
+    <None Include="wwwroot\js\admin\pages\coming-soon\coming-soon.js" />
+    <None Include="wwwroot\js\admin\pages\faq\faq.js" />
+    <None Include="wwwroot\js\admin\pages\faq\faq2.js" />
+    <None Include="wwwroot\js\admin\pages\helpdesk.js" />
+    <None Include="wwwroot\js\admin\users\account-settings.js" />
+    <None Include="wwwroot\js\admin\widgets\modules-widgets.js" />
   </ItemGroup>
 
 </Project>

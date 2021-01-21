@@ -46,6 +46,7 @@ namespace eGym.Core.Security
         #endregion
 
         #region LOGIN
+        Task LoginAsync(User user, bool isPersistent);
         //Task<LoginResponse> UserLoginAPIAsync(
         //    string username, string password, bool rememberMe = false, string rememberValue = null, string culture = null,
         //    bool getByEmail = true, bool getByUsername = true, bool getByPhoneNumber = true);

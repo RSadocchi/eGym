@@ -37,10 +37,13 @@ namespace eGym.MVC.Controllers
             if (!await _identity.CheckPasswordAsync(user, model.Password))
                 throw new Exception("Invalid credetials");
 
-            
+            var loggedIn = false;
+            if (!user.Disabled && user.PasswordExpirationDateTime.GetValueOrDefault(DateTime.MaxValue) > DateTime.Now)
+            {
+                await _identity.LoginAsync(user, true);
+            }
 
-
-            return Ok(new { success = true, dashboard = "", disabled = true });
+            return Ok(new { loggedIn, redirect = "", disabled = user.Disabled, passwordExpired = user.PasswordExpirationDateTime.GetValueOrDefault(DateTime.MaxValue) <= DateTime.Now });
 
         }
 
