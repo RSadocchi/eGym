@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eGym.Core.Domain
 {
-    [Table(nameof(Country), Schema = "dbo")]
+    [Table(nameof(Country), Schema = "conf")]
     public partial class Country : Entity, IAggregateRoot
     {
         #region Db Columns

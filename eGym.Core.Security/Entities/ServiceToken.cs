@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eGym.Core.Security.Identity
 {
+    [Table(nameof(ServiceToken), Schema = "Security")]
     public partial class ServiceToken
     {
         [Key]

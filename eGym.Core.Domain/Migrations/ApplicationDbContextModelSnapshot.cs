@@ -539,7 +539,7 @@ namespace eGym.Core.Domain.Migrations
                         .IsUnique()
                         .IsClustered(false);
 
-                    b.ToTable("Country", "dbo");
+                    b.ToTable("Country", "conf");
 
                     b.HasData(
                         new

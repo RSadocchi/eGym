@@ -1,4 +1,5 @@
 using eGym.Application.Option;
+using eGym.Application.Services;
 using eGym.Core.Domain;
 using eGym.Core.Security;
 using eGym.Core.Security.Identity;
@@ -137,6 +138,9 @@ namespace eGym.MVC
             // SCOPED:     Are the same within a request, but different across different requests
             // SINGLETON:  Are the same for every object and every request
 
+            services.AddSingleton<IComuniItalianiService, ComuniItalianiService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ITaxCodeService, TaxCodeService>();
 
             #endregion
 
@@ -156,6 +160,16 @@ namespace eGym.MVC
             #endregion
 
             #region MVC
+            services
+                .Configure<RazorViewEngineOptions>(options =>
+                {
+                    options.AreaViewLocationFormats.Clear();
+                    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/{1}/{0}.cshtml");
+                    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/Shared/{0}.cshtml");
+                    options.AreaViewLocationFormats.Add("/Areas/{2}/Views/Dashboard/Partials/{0}.cshtml");
+                    options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
+                });
+
             services
                .AddControllersWithViews()
                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -233,7 +247,7 @@ namespace eGym.MVC
             {
                 endpoints.MapControllerRoute(
                     name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

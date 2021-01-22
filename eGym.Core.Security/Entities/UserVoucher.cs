@@ -6,6 +6,7 @@ using System.Text;
 
 namespace eGym.Core.Security.Identity
 {
+    [Table(nameof(UserVoucher), Schema = "Security")]
     public partial class UserVoucher // : Entity, IAggregateRoot
     {
         [Key] public int UV_ID { get; set; }

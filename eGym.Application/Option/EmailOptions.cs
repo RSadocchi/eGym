@@ -4,7 +4,7 @@ using System.Text;
 
 namespace eGym.Application.Option
 {
-    public class EmailOptions
+    public class EmailOptions : IEmailServerOptions
     {
         public string FromName { get; set; }
         public string FromAddress { get; set; }

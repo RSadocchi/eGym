@@ -35,7 +35,7 @@ namespace eGym.Core.Security.Migrations
 
                     b.HasKey("TokenID");
 
-                    b.ToTable("Captchas");
+                    b.ToTable("Captcha", "Security");
                 });
 
             modelBuilder.Entity("eGym.Core.Security.Identity.PasswordHistory", b =>
@@ -95,28 +95,28 @@ namespace eGym.Core.Security.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "45362ee3-275f-4de5-bd7b-64ce27cf6e8a",
+                            ConcurrencyStamp = "4e3de014-daa8-4816-ab06-1f2fa329d36a",
                             Name = "Auto",
                             NormalizedName = "AUTO"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "bb2e0f3f-ee7c-4e49-9d3f-7d60b12b2e6b",
+                            ConcurrencyStamp = "49ed6c03-f37f-4529-81a3-45e6f18b7338",
                             Name = "SysAdmin",
                             NormalizedName = "SYSADMIN"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "117f982c-ad56-47dd-93b4-5db6d7b3c256",
+                            ConcurrencyStamp = "29ecb2ba-8ec0-453a-81d2-1d4de020b111",
                             Name = "Administarator",
                             NormalizedName = "ADMINISTARATOR"
                         },
                         new
                         {
                             Id = 4,
-                            ConcurrencyStamp = "7537e7e8-3f96-4730-b8b1-996c9e26c75d",
+                            ConcurrencyStamp = "bda1374e-ecc7-44ac-a169-53cc95cc76ba",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -228,7 +228,7 @@ namespace eGym.Core.Security.Migrations
 
                     b.HasKey("ST_ID");
 
-                    b.ToTable("ServiceTokens");
+                    b.ToTable("ServiceToken", "Security");
                 });
 
             modelBuilder.Entity("eGym.Core.Security.Identity.User", b =>
@@ -331,7 +331,7 @@ namespace eGym.Core.Security.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ef2fbd87-b2c6-4343-81f3-0d7815a15e45",
+                            ConcurrencyStamp = "c92ba590-dc27-45a2-9bb3-3a9dbb4b98f5",
                             Culture = "it-IT",
                             Disabled = true,
                             Email = "dev@digitalbubbles.cloud",
@@ -340,10 +340,10 @@ namespace eGym.Core.Security.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DEV@DIGITALBUBBLES.CLOUD",
                             NormalizedUserName = "AUTO",
-                            PasswordExpirationDateTime = new DateTime(2121, 1, 21, 17, 23, 0, 31, DateTimeKind.Local).AddTicks(9891),
-                            PasswordHash = "AQAAAAEAACcQAAAAEOhanXONgJqNvhABr4rZGsxkDj2IfnityhCuMCQm2nGMIKqxoLoJKFy2vMWGDVh/cw==",
+                            PasswordExpirationDateTime = new DateTime(2121, 1, 22, 22, 58, 8, 248, DateTimeKind.Local).AddTicks(3667),
+                            PasswordHash = "AQAAAAEAACcQAAAAEJo018FWHhXai+wRLzhyB3QMiWS7PKja6O9B77XNxSrOEIMKu1ySsygAGsikKnLmKg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7617cf59-47d2-4c9c-a8ba-e7dbd3b714ba",
+                            SecurityStamp = "26a7ec2b-d1d5-4447-b490-4360bf4e04b6",
                             TwoFactorEnabled = false,
                             UserName = "auto"
                         },
@@ -351,7 +351,7 @@ namespace eGym.Core.Security.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "57a8fff0-8717-45ec-bb65-972aef26f6b7",
+                            ConcurrencyStamp = "b35cfa6e-602d-478b-8f7d-0128553f51a4",
                             Culture = "it-IT",
                             Disabled = false,
                             Email = "info@digitalbubbles.cloud",
@@ -360,10 +360,10 @@ namespace eGym.Core.Security.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "INFO@DIGITALBUBBLES.CLOUD",
                             NormalizedUserName = "ADMIN",
-                            PasswordExpirationDateTime = new DateTime(2121, 1, 21, 17, 23, 0, 47, DateTimeKind.Local).AddTicks(426),
-                            PasswordHash = "AQAAAAEAACcQAAAAEBKAMOgEcwoXZlp0LKA/s+ZsbK9QprBB5hRlhdvyLBONjtIVJzaPDovi1NxJ/hujSQ==",
+                            PasswordExpirationDateTime = new DateTime(2121, 1, 22, 22, 58, 8, 267, DateTimeKind.Local).AddTicks(3834),
+                            PasswordHash = "AQAAAAEAACcQAAAAEOo5SlT332byVQat31t84vMCadsxehuHqeRrHj9PZIKsCpx9mTg2rf0dl5Km7+hzXQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0561b499-c557-4d79-9e3d-957edefb1d6b",
+                            SecurityStamp = "ef1a07fb-6e9f-47e9-bcd8-d60d59bd8c1d",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -586,7 +586,7 @@ namespace eGym.Core.Security.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserVouchers");
+                    b.ToTable("UserVoucher", "Security");
                 });
 
             modelBuilder.Entity("eGym.Core.Security.Identity.PasswordHistory", b =>

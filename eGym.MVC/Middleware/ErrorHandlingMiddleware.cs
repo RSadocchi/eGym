@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -36,33 +37,33 @@ namespace eGym.MVC.Middleware
                     context.Response.Redirect($"/error/{context.Response.StatusCode}");
             }
             /// Logging errore di validazione fluent
-            //catch (ValidationException e)
-            //{
-            //    foreach (var err in e.Errors) _logger.LogInformation($"{err.PropertyName}: {err.ErrorCode} {err.Severity} | {err.ErrorMessage}", "ValidationException");
-            //    await HandleErrorAsync(context, e);
-            //}
+            catch (ValidationException e)
+            {
+                foreach (var err in e.Errors) _logger.LogInformation($"{err.PropertyName}: {err.ErrorCode} {err.Severity} | {err.ErrorMessage}", "ValidationException");
+                await HandleErrorAsync(context, e);
+            }
             catch (DbUpdateConcurrencyException e)
             {
-                _logger.LogCritical($"{e.ToString()}", "DbUpdateConcurrencyException");
+                _logger.LogCritical($"{e}", "DbUpdateConcurrencyException");
 
                 await HandleErrorAsync(context, e);
             }
             /// Logging errore di validazione record database
             catch (DbUpdateException e)
             {
-                _logger.LogCritical($"{e.ToString()}", "DbUpdateException");
+                _logger.LogCritical($"{e}", "DbUpdateException");
 
                 await HandleErrorAsync(context, e);
             }
             catch (FileNotFoundException e)
             {
-                _logger.LogCritical($"{e.ToString()}", "FileNotFoundException");
+                _logger.LogCritical($"{e}", "FileNotFoundException");
                 await HandleErrorAsync(context, e);
             }
             /// Logging errore generico
             catch (Exception e)
             {
-                _logger.LogCritical($"{e.ToString()}", "Exception");
+                _logger.LogCritical($"{e}", "Exception");
                 await HandleErrorAsync(context, e);
             }
         }
@@ -88,7 +89,7 @@ namespace eGym.MVC.Middleware
                 if (exc == null) return null;
                 // Se l'eccezione che sto provando a serializzare non è una Validation
                 // allora vado a ricercare una ValidationException nella InnerException
-                //if (!(exc is ValidationException)) return GetOnlySomeFieldsFromExceptionObject(exc.InnerException);
+                if (!(exc is ValidationException)) return GetOnlySomeFieldsFromExceptionObject(exc.InnerException);
                 return new
                 {
                     exc.Message,
