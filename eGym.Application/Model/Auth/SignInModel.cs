@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace eGym.MVC.Models
+namespace eGym.Application.Model
 {
-    public class LoginModel
+    public class SignInModel
     {
         [Required]
         public string Username { get; set; }

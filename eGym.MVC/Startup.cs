@@ -1,11 +1,16 @@
+using eGym.Application.Option;
 using eGym.Core.Domain;
 using eGym.Core.Security;
 using eGym.Core.Security.Identity;
+using eGym.MVC.Middleware;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,15 +57,11 @@ namespace eGym.MVC
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-            #region LOCALIZATION
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture(Startup.DefaultCulture);
-                options.SupportedCultures = Startup.SupportedCultures;
-                options.SupportedUICultures = Startup.SupportedCultures;
-            });
+            #region OPTIONS
+            services.Configure<ApplicationOptions>(Configuration.GetSection(nameof(ApplicationOptions)));
+            services.Configure<EmailOptions>(Configuration.GetSection(nameof(EmailOptions)));
+            services.Configure<ApplicationResources>(Configuration.GetSection(nameof(ApplicationResources)));
+            services.Configure<DocRepositoryOptions>(Configuration.GetSection(nameof(DocRepositoryOptions)));
             #endregion
 
             #region DB CONTEXT
@@ -118,11 +119,72 @@ namespace eGym.MVC
                 .AddErrorDescriber<CustomIdentityErrorDescriber_IT>();
             #endregion
 
-            services.AddControllersWithViews();
+            #region AUTH POLICY
+            var properties = typeof(Const_ClaimTypes).GetFields();
+            foreach (var property in properties)
+            {
+                services
+                    .AddAuthorization(opt =>
+                    {
+                        opt.AddPolicy(property.Name, policy => policy.RequireClaim(property.Name, Const_ClaimValues.DefaultValue));
+                    });
+            }
+            #endregion
+
+            #region DEPENDENCY INJECTION
+            // REMEMBER ====
+            // TRANSIENT:  A new instance is provided to every controller and every service
+            // SCOPED:     Are the same within a request, but different across different requests
+            // SINGLETON:  Are the same for every object and every request
+
+
+            #endregion
+
+            #region LOCALIZATION
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture(Startup.DefaultCulture);
+                options.SupportedCultures = Startup.SupportedCultures;
+                options.SupportedUICultures = Startup.SupportedCultures;
+            });
+            #endregion
+
+            #region GZIP
+            services.Configure<GzipCompressionProviderOptions>(opt => opt.Level = System.IO.Compression.CompressionLevel.Optimal);
+            services.AddResponseCompression(opt => opt.EnableForHttps = true);
+            #endregion
+
+            #region MVC
+            services
+               .AddControllersWithViews()
+               .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+               .AddDataAnnotationsLocalization()
+               .AddFluentValidation(opt =>
+               {
+                   opt.ImplicitlyValidateChildProperties = true;
+               });
+            #endregion
+
+            #region AUTOMAPPER
+
+            #endregion
+
+            #region FLUENT VALIDATION
+            #region DTO
+
+            #endregion
+
+            #region MODEL
+
+            #endregion
+            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -131,13 +193,41 @@ namespace eGym.MVC
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
+
+                using (var serviceScoped = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    using (var ctx = serviceScoped.ServiceProvider.GetService<SecurityDbContext>())
+                    {
+                        ctx.MigrationConnectionString = _securityConnectionString;
+                        ctx.Database.Migrate();
+                    }
+                    using (var ctx = serviceScoped.ServiceProvider.GetService<ApplicationDbContext>())
+                    {
+                        ctx.MigrationConnectionString = _applicationConnectionString;
+                        ctx.Database.Migrate();
+                    }
+                }
             }
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(Startup.DefaultCulture),
+                SupportedCultures = Startup.SupportedCultures,
+                SupportedUICultures = Startup.SupportedCultures
+            });
+
+            app.UseRequestLocalization();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,5 +1,5 @@
-﻿using eGym.Core.Security;
-using eGym.MVC.Models;
+﻿using eGym.Application.Model;
+using eGym.Core.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,7 +26,7 @@ namespace eGym.MVC.Controllers
         public IActionResult SignIn() => View();
 
         [HttpPost("/sign-in")]
-        public async Task<IActionResult> SignIn(LoginModel model)
+        public async Task<IActionResult> SignIn(SignInModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -51,7 +51,7 @@ namespace eGym.MVC.Controllers
         public IActionResult SignUp() => View();
 
         [HttpPost("/sign-up")]
-        public async Task<IActionResult> SignUp(LoginModel model)
+        public async Task<IActionResult> SignUp(SignInModel model)
         {
             return BadRequest();
         }
