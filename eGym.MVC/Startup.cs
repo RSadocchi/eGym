@@ -1,6 +1,7 @@
 using eGym.Application.Option;
 using eGym.Application.Services;
 using eGym.Core.Domain;
+using eGym.Core.Localization;
 using eGym.Core.Security;
 using eGym.Core.Security.Identity;
 using eGym.MVC.Middleware;
@@ -41,6 +42,7 @@ namespace eGym.MVC
 
         private string _securityConnectionString { get; set; }
         private string _applicationConnectionString { get; set; }
+        private string _localizationConnectionString { get; set; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
@@ -53,7 +55,7 @@ namespace eGym.MVC
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
 
-            DefaultCulture = new CultureInfo(Configuration.GetValue<string>(nameof(DefaultCulture)) ?? "it");
+            DefaultCulture = new CultureInfo(Configuration.GetValue<string>($"{nameof(ApplicationOptions)}:{nameof(DefaultCulture)}") ?? "it");
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -74,15 +76,18 @@ namespace eGym.MVC
                 case "RSADO":
                     _securityConnectionString = string.Format(Configuration.GetConnectionString("Security"), $"{System.Environment.MachineName}\\SQLEXPRESS");
                     _applicationConnectionString = string.Format(Configuration.GetConnectionString("Default"), $"{System.Environment.MachineName}\\SQLEXPRESS");
+                    _localizationConnectionString = string.Format(Configuration.GetConnectionString("Localization"), $"{System.Environment.MachineName}\\SQLEXPRESS");
                     break;
                 default:
                     _securityConnectionString = string.Format(Configuration.GetConnectionString("Security"), "(local)");
                     _applicationConnectionString = string.Format(Configuration.GetConnectionString("Default"), "(local)");
+                    _localizationConnectionString = string.Format(Configuration.GetConnectionString("Localization"), "(local)");
                     break;
             }
 #else
                     _securityConnectionString = sConfiguration.GetConnectionString("Security");
                     _applicationConnectionString = Configuration.GetConnectionString("Default");
+                    _localizationConnectionString = Configuration.GetConnectionString("Localization");
 #endif
 
             Console.WriteLine($" === SecurityConString: {_securityConnectionString}");
@@ -96,6 +101,11 @@ namespace eGym.MVC
                     o.UseSqlServer(_applicationConnectionString, opt => opt
                         .MigrationsAssembly(typeof(ApplicationDbContext).Assembly.GetName().Name)
                         .CommandTimeout(60)));
+
+            Console.WriteLine($" === LocalizationConString: {_localizationConnectionString}");
+            services
+                .AddDbContext<LocalizationDbContext>(o =>
+                    o.UseSqlServer(_localizationConnectionString, opt => opt.MigrationsAssembly(typeof(LocalizationDbContext).Assembly.GetName().Name)));
             #endregion
 
             #region SECURITY & IDENTITY
@@ -141,6 +151,7 @@ namespace eGym.MVC
             services.AddSingleton<IComuniItalianiService, ComuniItalianiService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITaxCodeService, TaxCodeService>();
+            services.AddTransient<IAppUtilityService, AppUtilityService>();
 
             #endregion
 
@@ -218,6 +229,11 @@ namespace eGym.MVC
                     using (var ctx = serviceScoped.ServiceProvider.GetService<ApplicationDbContext>())
                     {
                         ctx.MigrationConnectionString = _applicationConnectionString;
+                        ctx.Database.Migrate();
+                    }
+                    using (var ctx = serviceScoped.ServiceProvider.GetService<LocalizationDbContext>())
+                    {
+                        ctx.MigrationConnectionString = _localizationConnectionString;
                         ctx.Database.Migrate();
                     }
                 }

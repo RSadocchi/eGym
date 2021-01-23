@@ -11,3 +11,5 @@ eGym.Common/bin/
 eGym.Core.Security/bin/
 eGym.Core.Security/obj/
 eGym.Application/bin/
+eGym.Core.Localization/bin/
+eGym.Core.Localization/obj/

@@ -31,9 +31,6 @@ namespace eGym.Core.Domain
         public DbSet<Athlete_Master> Athlete_Masters { get; set; }
         public DbSet<Athlete_WeightXAthlete> Athlete_WeightXAthletes { get; set; }
 
-        public DbSet<CMS_History> CMS_Histories { get; set; }
-        public DbSet<CMS_Master> CMS_Masters { get; set; }
-
         public DbSet<Sport_Division> Sport_Divisions { get; set; }
         public DbSet<Sport_DivisionLocalized> Sport_DivisionLocalizeds { get; set; }
         public DbSet<Sport_DivisionXSport> Sport_DivisionXSports { get; set; }
@@ -83,11 +80,6 @@ namespace eGym.Core.Domain
             {
                 e.HasIndex(p => p.Country_IsoCode).IsUnique(true).IsClustered(false);
                 e.HasData(Context.SeedData.TabSchemaSeedData.Country);
-            });
-
-            builder.Entity<CMS_History>(e =>
-            {
-                e.HasOne(p => p.CMS_Master).WithMany(p => p.CMS_Histories).HasForeignKey(p => p.CMSH_MasterID).OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<Anag_MasterRole>(e =>

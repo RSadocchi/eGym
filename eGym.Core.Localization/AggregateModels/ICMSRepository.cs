@@ -1,6 +1,6 @@
 ﻿using eGym.Core.SeedWork;
 
-namespace eGym.Core.Domain
+namespace eGym.Core.Localization
 {
     public interface ICMSRepository : IRepository<CMS_Master, int>
     {

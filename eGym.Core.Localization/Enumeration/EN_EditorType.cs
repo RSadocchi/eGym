@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace eGym.Core.Domain
+namespace eGym.Core.Localization
 {
     public class EN_EditorType : Enumeration<short>
     {

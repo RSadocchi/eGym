@@ -24,6 +24,7 @@ namespace eGym.Application.Option
 
         public string URI { get; set; }
         public string API_URI { get; set; }
+        public string DefaultCulture { get; set; }
 
         public int AutoUserID { get; set; }
         public int AutoAnagID { get; set; }
