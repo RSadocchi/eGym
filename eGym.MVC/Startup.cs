@@ -2,6 +2,7 @@ using eGym.Application.Option;
 using eGym.Application.Services;
 using eGym.Core.Domain;
 using eGym.Core.Localization;
+using eGym.Core.Log;
 using eGym.Core.Security;
 using eGym.Core.Security.Identity;
 using eGym.MVC.Middleware;
@@ -43,6 +44,7 @@ namespace eGym.MVC
         private string _securityConnectionString { get; set; }
         private string _applicationConnectionString { get; set; }
         private string _localizationConnectionString { get; set; }
+        private string _logConnectionString { get; set; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
@@ -77,17 +79,20 @@ namespace eGym.MVC
                     _securityConnectionString = string.Format(Configuration.GetConnectionString("Security"), $"{System.Environment.MachineName}\\SQLEXPRESS");
                     _applicationConnectionString = string.Format(Configuration.GetConnectionString("Default"), $"{System.Environment.MachineName}\\SQLEXPRESS");
                     _localizationConnectionString = string.Format(Configuration.GetConnectionString("Localization"), $"{System.Environment.MachineName}\\SQLEXPRESS");
+                    _logConnectionString = string.Format(Configuration.GetConnectionString("Log"), $"{System.Environment.MachineName}\\SQLEXPRESS");
                     break;
                 default:
                     _securityConnectionString = string.Format(Configuration.GetConnectionString("Security"), "(local)");
                     _applicationConnectionString = string.Format(Configuration.GetConnectionString("Default"), "(local)");
                     _localizationConnectionString = string.Format(Configuration.GetConnectionString("Localization"), "(local)");
+                    _logConnectionString = string.Format(Configuration.GetConnectionString("Log"), "(local)");
                     break;
             }
 #else
                     _securityConnectionString = sConfiguration.GetConnectionString("Security");
                     _applicationConnectionString = Configuration.GetConnectionString("Default");
                     _localizationConnectionString = Configuration.GetConnectionString("Localization");
+                    _logConnectionString = Configuration.GetConnectionString("Localization");
 #endif
 
             Console.WriteLine($" === SecurityConString: {_securityConnectionString}");
@@ -106,6 +111,11 @@ namespace eGym.MVC
             services
                 .AddDbContext<LocalizationDbContext>(o =>
                     o.UseSqlServer(_localizationConnectionString, opt => opt.MigrationsAssembly(typeof(LocalizationDbContext).Assembly.GetName().Name)));
+
+            Console.WriteLine($" === LogConString: {_securityConnectionString}");
+            services
+                .AddDbContext<LogDbContext>(o =>
+                    o.UseSqlServer(_logConnectionString, opt => opt.MigrationsAssembly(typeof(LogDbContext).Assembly.GetName().Name)));
             #endregion
 
             #region SECURITY & IDENTITY
@@ -234,6 +244,11 @@ namespace eGym.MVC
                     using (var ctx = serviceScoped.ServiceProvider.GetService<LocalizationDbContext>())
                     {
                         ctx.MigrationConnectionString = _localizationConnectionString;
+                        ctx.Database.Migrate();
+                    }
+                    using (var ctx = serviceScoped.ServiceProvider.GetService<LogDbContext>())
+                    {
+                        ctx.MigrationConnectionString = _logConnectionString;
                         ctx.Database.Migrate();
                     }
                 }

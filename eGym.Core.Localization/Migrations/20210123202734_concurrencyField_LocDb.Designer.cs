@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGym.Core.Localization;
 
 namespace eGym.Core.Localization.Migrations
 {
     [DbContext(typeof(LocalizationDbContext))]
-    partial class LocalizationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210123202734_concurrencyField_LocDb")]
+    partial class concurrencyField_LocDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

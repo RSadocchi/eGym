@@ -13,3 +13,5 @@ eGym.Core.Security/obj/
 eGym.Application/bin/
 eGym.Core.Localization/bin/
 eGym.Core.Localization/obj/
+eGym.Core.Log/bin/
+eGym.Core.Log/obj/

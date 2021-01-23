@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace eGym.Core.SeedWork
@@ -21,6 +22,9 @@ namespace eGym.Core.SeedWork
         //    if (_domainEvents is null) return;
         //    _domainEvents.Remove(eventItem);
         //}
+
+        [Timestamp]
+        public byte[] ConcurrencyTimestamp { get; set; }
 
         public override bool Equals(object obj)
         {

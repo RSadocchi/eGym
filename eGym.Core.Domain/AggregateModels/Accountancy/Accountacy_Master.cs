@@ -45,12 +45,21 @@ namespace eGym.Core.Domain
         public string Acc_DocNote { get; set; }
         public short Acc_ReasonID { get; set; }
         public short? Acc_TermID { get; set; }
-        public short Acc_AnagID { get; set; }
+        public int? Acc_AnagID { get; set; }
 
+        public virtual Anag_Master Anag_Master { get; set; }
+        public virtual Accountacy_Master Accountacy_Parent { get; set; }
+        public virtual ICollection<Accountacy_Master> Accountacy_Childs { get; set; }
+        [NotMapped]
+        public virtual EN_AccountancyDocType EN_AccountancyDocType => this.Acc_DocTypeID.HasValue ? EN_AccountancyDocType.FromID(this.Acc_DocTypeID.Value) : null;
+        [NotMapped]
+        public virtual EN_PaymentReason EN_PaymentReason => EN_PaymentReason.FromID(this.Acc_ReasonID);
+        [NotMapped]
+        public virtual EN_PaymentTerm EN_PaymentTerm => this.Acc_TermID.HasValue ? EN_PaymentTerm.FromID(this.Acc_TermID.Value) : null;
 
         public Accountacy_Master()
         {
-
+            Accountacy_Childs = new HashSet<Accountacy_Master>();
         }
     }
 }

@@ -37,6 +37,7 @@
     <ProjectReference Include="..\eGym.Common\eGym.Common.csproj" />
     <ProjectReference Include="..\eGym.Core.Domain\eGym.Core.Domain.csproj" />
     <ProjectReference Include="..\eGym.Core.Localization\eGym.Core.Localization.csproj" />
+    <ProjectReference Include="..\eGym.Core.Log\eGym.Core.Log.csproj" />
     <ProjectReference Include="..\eGym.Core.Security\eGym.Core.Security.csproj" />
     <ProjectReference Include="..\eGym.Core.SeedWork\eGym.Core.SeedWork.csproj" />
   </ItemGroup>
