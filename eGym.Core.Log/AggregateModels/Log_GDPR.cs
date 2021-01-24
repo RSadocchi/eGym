@@ -18,9 +18,7 @@ namespace eGym.Core.Log
         [MaxLength(50)]
         public GDPRActionEnum Action { get; set; }
         [Required]
-        public string UserId { get; set; }
-        [Required]
-        public string UserRole { get; set; }
+        public string User { get; set; }
         [MaxLength(50)]
         public string IPAddress { get; set; } //request?.HttpContext.Connection.RemoteIpAddress
         public string UserAgent { get; set; } //request?.Headers["User-Agent"].ToString()

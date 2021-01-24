@@ -34,8 +34,7 @@ namespace eGym.Core.Log
 
         public async Task Invoke(
             HttpContext context,
-            ILogRepository logRepository,
-            IIdentityService identityService)
+            ILogRepository logRepository)
         {
             var endpointIn = context.Features.Get<IEndpointFeature>()?.Endpoint;
             var attributeIn = endpointIn?.Metadata.GetMetadata<GDPRAttribute>();
@@ -47,7 +46,7 @@ namespace eGym.Core.Log
                 {
                     IPAddress = context.Request.HttpContext.Connection.RemoteIpAddress?.ToString(),
                     UserAgent = context.Request.Headers["User-Agent"].ToString(),
-                    UserId = identityService.GetCurrentUserIDAsync().Result.ToString()
+                    User = context.Request.HttpContext.User.Identity.Name
                 };
                 
                 this.LogRequest(context: context, ref entity);
