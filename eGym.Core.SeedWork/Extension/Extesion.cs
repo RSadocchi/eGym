@@ -8,10 +8,24 @@ namespace eGym.Core.SeedWork
 {
     public static class SQLDataConverter
     {
-        public static string ToSqlString(this IEnumerable<string> source, char separator = ',')
+        public static string ToSqlStringFromString(this IEnumerable<string> source, char separator = ',')
         {
             if (source == null || source.Count() <= 0) return null;
             return string.Join(separator, source);
+        }
+
+        public static string ToSqlStringFromNumber<T>(this IEnumerable<T> source, char separator = ',')
+            where T : IComparable<T>
+        {
+            if (source == null || source.Count() <= 0) return null;
+            return string.Join(separator, source.Select(t => t.ToString()));
+        }
+
+        public static string ToSqlStringFromEnum<T>(this IEnumerable<T> source, char separator = ',')
+            where T : struct, IConvertible
+        {
+            if (source == null || source.Count() <= 0) return null;
+            return string.Join(separator, source.Select(t => t.ToString()));
         }
 
         public static IEnumerable<string> ToEnumerableStrings(this string source, char separator = ',', StringSplitOptions splitOptions = StringSplitOptions.RemoveEmptyEntries)
@@ -23,15 +37,6 @@ namespace eGym.Core.SeedWork
                 ?.Select(t => t.Trim());
         }
 
-        //public static IEnumerable<int> ToEnumerableNumber(this string source, char separator = ',', StringSplitOptions splitOptions = StringSplitOptions.RemoveEmptyEntries)
-        //{
-        //    if (string.IsNullOrWhiteSpace(source)) return Array.Empty<int>();
-        //    return source
-        //        .Split(separator, splitOptions)
-        //        ?.Where(t => !string.IsNullOrWhiteSpace(t) && int.TryParse(t, out int tt))
-        //        ?.Select(t => int.Parse(t.Trim()));
-        //}
-        
         public static IEnumerable<T> ToEnumerableNumber<T>(this string source, char separator = ',', StringSplitOptions splitOptions = StringSplitOptions.RemoveEmptyEntries)
             where T : IComparable<T>
         {
@@ -44,6 +49,24 @@ namespace eGym.Core.SeedWork
                     return !string.IsNullOrWhiteSpace(t) && t1 != null;
                 })
                 ?.Select(t => (T)Convert.ChangeType(t.Trim(), typeof(T)));
+        }
+
+        public static IEnumerable<T> ToEnumerableEnum<T>(this string source, char separator = ',', StringSplitOptions splitOptions = StringSplitOptions.RemoveEmptyEntries)
+            where T : struct, IConvertible
+        {
+            if (!typeof(T).IsEnum) return null;
+            if (string.IsNullOrWhiteSpace(source)) return Array.Empty<T>();
+            return source
+                .Split(separator, splitOptions)
+                ?.Where(t =>
+                {
+                    T t1 = (T)Enum.Parse(typeof(T), t);
+                    return !string.IsNullOrWhiteSpace(t) &&
+                        typeof(T).GetFields()
+                            .Where(v => v.Name == t1.ToString())
+                            .Any();
+                })
+                ?.Select(t => (T)Enum.Parse(typeof(T), t));
         }
 
         public static string CryptSensitiveData(this string value, string token = null)
