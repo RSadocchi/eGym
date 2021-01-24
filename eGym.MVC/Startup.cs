@@ -9,6 +9,7 @@ using eGym.MVC.Middleware;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -45,6 +46,7 @@ namespace eGym.MVC
         private string _applicationConnectionString { get; set; }
         private string _localizationConnectionString { get; set; }
         private string _logConnectionString { get; set; }
+        private string _secretKey { get; set; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
@@ -58,6 +60,7 @@ namespace eGym.MVC
             Configuration = builder.Build();
 
             DefaultCulture = new CultureInfo(Configuration.GetValue<string>($"{nameof(ApplicationOptions)}:{nameof(DefaultCulture)}") ?? "it");
+            _secretKey = Configuration.GetValue<string>($"{nameof(ApplicationOptions)}:{nameof(ApplicationOptions.SecretKey)}");
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -157,12 +160,17 @@ namespace eGym.MVC
             // TRANSIENT:  A new instance is provided to every controller and every service
             // SCOPED:     Are the same within a request, but different across different requests
             // SINGLETON:  Are the same for every object and every request
+            #region Repositories
+            services.AddScoped<ILogRepository, LogRepository>();
+            #endregion
 
+            #region Services
             services.AddSingleton<IComuniItalianiService, ComuniItalianiService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITaxCodeService, TaxCodeService>();
+            services.AddScoped<IIdentityService, IdentityService>();
             services.AddTransient<IAppUtilityService, AppUtilityService>();
-
+            #endregion
             #endregion
 
             #region LOCALIZATION
@@ -218,7 +226,6 @@ namespace eGym.MVC
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             if (env.IsDevelopment())
             {
@@ -239,6 +246,7 @@ namespace eGym.MVC
                     using (var ctx = serviceScoped.ServiceProvider.GetService<ApplicationDbContext>())
                     {
                         ctx.MigrationConnectionString = _applicationConnectionString;
+                        ctx.SecurityToken = _secretKey;
                         ctx.Database.Migrate();
                     }
                     using (var ctx = serviceScoped.ServiceProvider.GetService<LocalizationDbContext>())
@@ -273,6 +281,15 @@ namespace eGym.MVC
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseMiddleware<TelemetryGDPR>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
+            app.Use(async (context, next) =>
+            {
+                context.Request.EnableBuffering();
+                await next();
+            });
 
             app.UseEndpoints(endpoints =>
             {

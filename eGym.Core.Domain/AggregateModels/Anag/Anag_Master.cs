@@ -16,7 +16,7 @@ namespace eGym.Core.Domain
         /// Nome
         /// </summary>
         [Required]
-        [MaxLength(150)]
+        [MaxLength(100)]
         public string Ang_FirstName { get; set; }
         /// <summary>
         /// Cognome

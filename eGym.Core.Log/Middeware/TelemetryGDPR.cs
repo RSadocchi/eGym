@@ -11,6 +11,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Text;
 using System;
+using eGym.Core.Security;
 
 namespace eGym.Core.Log
 {
@@ -21,15 +22,18 @@ namespace eGym.Core.Log
         readonly ILogger<TelemetryGDPR> _logger;
         readonly RecyclableMemoryStreamManager _memoryStreamManager;
         readonly ILogRepository _repository;
+        readonly IIdentityService _identity;
 
         public TelemetryGDPR(
             RequestDelegate requestDelegate,
             ILogger<TelemetryGDPR> logger,
-            ILogRepository logRepository)
+            ILogRepository logRepository,
+            IIdentityService identityService)
         {
             _next = requestDelegate;
             _logger = logger;
             _repository = logRepository;
+            _identity = identityService;
             _memoryStreamManager = new RecyclableMemoryStreamManager();
         }
 
@@ -45,13 +49,14 @@ namespace eGym.Core.Log
                 var entity = new Log_GDPR()
                 {
                     IPAddress = context.Request.HttpContext.Connection.RemoteIpAddress?.ToString(),
-                    UserAgent = context.Request.Headers["User-Agent"].ToString()
+                    UserAgent = context.Request.Headers["User-Agent"].ToString(),
+                    UserId = _identity.GetCurrentUserIDAsync().Result.ToString()
                 };
                 
                 this.LogRequest(context: context, ref entity);
                 this.LogResponse(context: context, ref entity);
 
-                await _repository.GDPR_SaveAsync(entity);
+                await _repository.GDPR_SaveAsync(entity: entity, saveChanges: true);
             }
         }
 

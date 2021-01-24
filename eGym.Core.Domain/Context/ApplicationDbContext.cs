@@ -12,10 +12,15 @@ namespace eGym.Core.Domain
     public class ApplicationDbContext : DbContext, IUnitOfWork
     {
         readonly IConfiguration _configuration;
+        
+        public string SecurityToken { get; set; }
         public string MigrationConnectionString { get; set; }
 
-        public ApplicationDbContext(IConfiguration configuration) { _configuration = configuration ?? throw new System.ArgumentNullException(nameof(configuration)); }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration) { _configuration = configuration ?? throw new System.ArgumentNullException(nameof(configuration)); }
+        public ApplicationDbContext(IConfiguration configuration) 
+        { 
+            _configuration = configuration ?? throw new System.ArgumentNullException(nameof(configuration));
+        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration) : this(configuration: configuration) { }
 
         #region DbSets
         public DbSet<Anag_Address> Anag_Addresses { get; set; }
@@ -101,21 +106,61 @@ namespace eGym.Core.Domain
             {
                 e.HasOne(p => p.Anag_Master).WithMany(p => p.Anag_Addresses).HasForeignKey(p => p.Adr_AnagID).OnDelete(DeleteBehavior.Cascade);
                 e.HasOne(p => p.Country).WithMany(p => p.Anag_Addresses).HasForeignKey(p => p.Adr_Country).OnDelete(DeleteBehavior.NoAction);
+
+                //e.Property(p => p.Adr_Address)
+                //    .HasConversion(
+                //        v => v.CryptSensitiveData(SecurityToken),
+                //        v => v.DecryptSensitiveData(SecurityToken));
+
+                //e.Property(p => p.Adr_Address1)
+                //    .HasConversion(
+                //        v => v.CryptSensitiveData(SecurityToken),
+                //        v => v.DecryptSensitiveData(SecurityToken));
+
+                //e.Property(p => p.Adr_Address2)
+                //    .HasConversion(
+                //        v => v.CryptSensitiveData(SecurityToken),
+                //        v => v.DecryptSensitiveData(SecurityToken));
             });
 
             builder.Entity<Anag_Contact>(e =>
             {
                 e.HasOne(p => p.Anag_Master).WithMany(p => p.Anag_Contacts).HasForeignKey(p => p.Cnt_AnagID).OnDelete(DeleteBehavior.Cascade);
+                
+                //e.Property(p => p.Cnt_Value)
+                //    .HasConversion(
+                //        v => v.CryptSensitiveData(SecurityToken),
+                //        v => v.DecryptSensitiveData(SecurityToken));
             });
 
             builder.Entity<Anag_Document>(e =>
             {
                 e.HasOne(p => p.Anag_Master).WithMany(p => p.Anag_Documents).HasForeignKey(p => p.Doc_AnagID).OnDelete(DeleteBehavior.Cascade);
+
+                //e.Property(p => p.Doc_Number)
+                //    .HasConversion(
+                //        v => v.CryptSensitiveData(SecurityToken),
+                //        v => v.DecryptSensitiveData(SecurityToken));
+
+                //e.Property(p => p.Doc_Path)
+                //    .HasConversion(
+                //        v => v.CryptSensitiveData(SecurityToken),
+                //        v => v.DecryptSensitiveData(SecurityToken));
             });
 
             builder.Entity<Anag_Master>(e =>
             {
                 e.HasOne(p => p.Country).WithMany(p => p.Anag_Masters).HasForeignKey(p => p.Ang_BirthCountry).OnDelete(DeleteBehavior.NoAction);
+
+                //e.Property(p => p.Ang_FirstName)
+                //    .HasConversion(
+                //        v => v.CryptSensitiveData(SecurityToken),
+                //        v => v.DecryptSensitiveData(SecurityToken));
+
+                //e.Property(p => p.Ang_LastName)
+                //    .HasConversion(
+                //        v => v.CryptSensitiveData(SecurityToken),
+                //        v => v.DecryptSensitiveData(SecurityToken));
             });
 
             builder.Entity<Athlete_Master>(e =>
