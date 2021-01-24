@@ -14,8 +14,7 @@ namespace eGym.Core.Security.Identity
             IUserClaimsPrincipalFactory<User> claimsFactory,
             IOptions<IdentityOptions> optionsAccessor,
             ILogger<SignInManager<User>> logger,
-            IAuthenticationSchemeProvider schemes)
-            : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
+            IAuthenticationSchemeProvider schemes) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
         { }
     }
 }

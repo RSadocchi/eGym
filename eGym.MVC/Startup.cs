@@ -140,11 +140,17 @@ namespace eGym.MVC
                 .AddRoleManager<RoleManager>()
                 .AddSignInManager<SignInManager>()
                 .AddEntityFrameworkStores<SecurityDbContext>()
-                .AddDefaultTokenProviders()
-                .AddErrorDescriber<CustomIdentityErrorDescriber_IT>();
-            #endregion
+                .AddDefaultTokenProviders();
 
-            #region AUTH POLICY
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.LoginPath = "/sign-in";
+                options.AccessDeniedPath = "/access-denied";
+                options.SlidingExpiration = true;
+            });
+            
             var properties = typeof(Const_ClaimTypes).GetFields();
             foreach (var property in properties)
             {
@@ -161,7 +167,8 @@ namespace eGym.MVC
             // TRANSIENT:  A new instance is provided to every controller and every service
             // SCOPED:     Are the same within a request, but different across different requests
             // SINGLETON:  Are the same for every object and every request
-            
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IComuniItalianiService, ComuniItalianiService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITaxCodeService, TaxCodeService>();
@@ -286,8 +293,8 @@ namespace eGym.MVC
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            //app.UseMiddleware<TelemetryGDPR>();
             app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<TelemetryGDPR>();
 
             //app.Use(async (context, next) =>
             //{

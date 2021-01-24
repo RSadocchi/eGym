@@ -1,6 +1,5 @@
 ﻿using eGym.Core.Localization.Context;
 using eGym.Core.SeedWork;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Threading;
