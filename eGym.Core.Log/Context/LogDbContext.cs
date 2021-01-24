@@ -22,6 +22,7 @@ namespace eGym.Core.Log
         public DbSet<Log_Master> Log_Masters { get; set; }
         public DbSet<Batch_Master> Batch_Masters { get; set; }
         public DbSet<Batch_LogXBatch> Batch_LogXBatches { get; set; }
+        public DbSet<Log_GDPR> Log_GDPRs { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
@@ -66,15 +67,15 @@ namespace eGym.Core.Log
             
             builder.Entity<Log_GDPR>(e =>
             {
-                e.Property(p => p.TableNames)
-                    .HasConversion(
-                        convertToProviderExpression: v => string.Join(',', v ?? Array.Empty<string>()),
-                        convertFromProviderExpression: v => !string.IsNullOrWhiteSpace(v) ? v.Split(',', StringSplitOptions.RemoveEmptyEntries).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray() : Array.Empty<string>());
+                //e.Property(p => p.TableNames)
+                //    .HasConversion(
+                //        convertToProviderExpression: v => string.Join(',', v ?? Array.Empty<string>()),
+                //        convertFromProviderExpression: v => !string.IsNullOrWhiteSpace(v) ? v.Split(',', StringSplitOptions.RemoveEmptyEntries).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray() : Array.Empty<string>());
 
-                e.Property(p => p.FieldNames)
-                    .HasConversion(
-                        convertToProviderExpression: v => string.Join(',', v ?? Array.Empty<string>()),
-                        convertFromProviderExpression: v => !string.IsNullOrWhiteSpace(v) ? v.Split(',', StringSplitOptions.RemoveEmptyEntries).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray() : Array.Empty<string>());
+                //e.Property(p => p.FieldNames)
+                //    .HasConversion(
+                //        convertToProviderExpression: v => string.Join(',', v ?? Array.Empty<string>()),
+                //        convertFromProviderExpression: v => !string.IsNullOrWhiteSpace(v) ? v.Split(',', StringSplitOptions.RemoveEmptyEntries).Where(t => !string.IsNullOrWhiteSpace(t)).ToArray() : Array.Empty<string>());
             });
         }
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net;
 
 namespace eGym.Core.Log
 {
@@ -14,17 +15,27 @@ namespace eGym.Core.Log
         public long Id { get; set; }
         public DateTime DateTime { get; set; }
         [Required]
-        public string UserId { get; set; }
-        [Required]
-        public string UserRole { get; set; }
-        [Required]
         [MaxLength(50)]
         public GDPRActionEnum Action { get; set; }
         [Required]
-        public string[] TableNames { get; set; }
+        public string UserId { get; set; }
         [Required]
+        public string UserRole { get; set; }
+        [MaxLength(50)]
+        public string IPAddress { get; set; } //request?.HttpContext.Connection.RemoteIpAddress
+        public string UserAgent { get; set; } //request?.Headers["User-Agent"].ToString()
+        public string RequestUrl { get; set; }
+        public string RequestCookies { get; set; }
+        public string RequestHeaders { get; set; }
+        public string RequestBody { get; set; }
+        //public string[] TableNames { get; set; }
+        //[Column(TypeName = "ntext")]
+        //public string[] FieldNames { get; set; }
+        [MaxLength(50)]
+        public HttpStatusCode ResponseStatusCode { get; set; }
         [Column(TypeName = "ntext")]
-        public string[] FieldNames { get; set; }
-        public string DbQuery { get; set; }
+        public string ResponseBody { get; set; }
+        [Column(TypeName = "time")]
+        public TimeSpan? ExecutionTime { get; set; }
     }
 }

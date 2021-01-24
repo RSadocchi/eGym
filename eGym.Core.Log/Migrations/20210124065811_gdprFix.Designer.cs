@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eGym.Core.Log;
 
 namespace eGym.Core.Log.Migrations
 {
     [DbContext(typeof(LogDbContext))]
-    partial class LogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210124065811_gdprFix")]
+    partial class gdprFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,31 +115,15 @@ namespace eGym.Core.Log.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan?>("ExecutionTime")
-                        .HasColumnType("time");
+                    b.Property<string>("EntitySerialized")
+                        .HasColumnType("ntext");
+
+                    b.Property<string>("EntiyTypeName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IPAddress")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("RequestBody")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RequestCookies")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RequestHeaders")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RequestUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResponseBody")
-                        .HasColumnType("ntext");
-
-                    b.Property<int>("ResponseStatusCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
 
                     b.Property<string>("UserAgent")
                         .HasColumnType("nvarchar(max)");
