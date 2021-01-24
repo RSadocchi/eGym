@@ -21,24 +21,21 @@ namespace eGym.Core.Log
         readonly RequestDelegate _next;
         readonly ILogger<TelemetryGDPR> _logger;
         readonly RecyclableMemoryStreamManager _memoryStreamManager;
-        readonly ILogRepository _repository;
-        readonly IIdentityService _identity;
 
         public TelemetryGDPR(
             RequestDelegate requestDelegate,
-            ILogger<TelemetryGDPR> logger,
-            ILogRepository logRepository,
-            IIdentityService identityService)
+            ILogger<TelemetryGDPR> logger)
         {
             _next = requestDelegate;
             _logger = logger;
-            _repository = logRepository;
-            _identity = identityService;
             _memoryStreamManager = new RecyclableMemoryStreamManager();
         }
 
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(
+            HttpContext context,
+            ILogRepository logRepository,
+            IIdentityService identityService)
         {
             var endpointIn = context.Features.Get<IEndpointFeature>()?.Endpoint;
             var attributeIn = endpointIn?.Metadata.GetMetadata<GDPRAttribute>();
@@ -50,13 +47,13 @@ namespace eGym.Core.Log
                 {
                     IPAddress = context.Request.HttpContext.Connection.RemoteIpAddress?.ToString(),
                     UserAgent = context.Request.Headers["User-Agent"].ToString(),
-                    UserId = _identity.GetCurrentUserIDAsync().Result.ToString()
+                    UserId = identityService.GetCurrentUserIDAsync().Result.ToString()
                 };
                 
                 this.LogRequest(context: context, ref entity);
                 this.LogResponse(context: context, ref entity);
 
-                await _repository.GDPR_SaveAsync(entity: entity, saveChanges: true);
+                await logRepository.GDPR_SaveAsync(entity: entity, saveChanges: true);
             }
         }
 

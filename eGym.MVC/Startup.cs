@@ -5,6 +5,7 @@ using eGym.Core.Localization;
 using eGym.Core.Log;
 using eGym.Core.Security;
 using eGym.Core.Security.Identity;
+using eGym.Core.SeedWork;
 using eGym.MVC.Middleware;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -115,7 +116,7 @@ namespace eGym.MVC
                 .AddDbContext<LocalizationDbContext>(o =>
                     o.UseSqlServer(_localizationConnectionString, opt => opt.MigrationsAssembly(typeof(LocalizationDbContext).Assembly.GetName().Name)));
 
-            Console.WriteLine($" === LogConString: {_securityConnectionString}");
+            Console.WriteLine($" === LogConString: {_logConnectionString}");
             services
                 .AddDbContext<LogDbContext>(o =>
                     o.UseSqlServer(_logConnectionString, opt => opt.MigrationsAssembly(typeof(LogDbContext).Assembly.GetName().Name)));
@@ -160,17 +161,20 @@ namespace eGym.MVC
             // TRANSIENT:  A new instance is provided to every controller and every service
             // SCOPED:     Are the same within a request, but different across different requests
             // SINGLETON:  Are the same for every object and every request
+            
+            services.AddSingleton<IComuniItalianiService, ComuniItalianiService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ITaxCodeService, TaxCodeService>();
+            services.AddScoped<IAppUtilityService, AppUtilityService>();
+
             #region Repositories
             services.AddScoped<ILogRepository, LogRepository>();
             #endregion
 
             #region Services
-            services.AddSingleton<IComuniItalianiService, ComuniItalianiService>();
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<ITaxCodeService, TaxCodeService>();
             services.AddScoped<IIdentityService, IdentityService>();
-            services.AddTransient<IAppUtilityService, AppUtilityService>();
             #endregion
+            
             #endregion
 
             #region LOCALIZATION
@@ -282,14 +286,14 @@ namespace eGym.MVC
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMiddleware<TelemetryGDPR>();
+            //app.UseMiddleware<TelemetryGDPR>();
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            app.Use(async (context, next) =>
-            {
-                context.Request.EnableBuffering();
-                await next();
-            });
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Request.EnableBuffering();
+            //    await next();
+            //});
 
             app.UseEndpoints(endpoints =>
             {

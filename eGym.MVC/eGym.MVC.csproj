@@ -47,6 +47,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="DocRepository\Data\" />
     <Folder Include="DocRepository\Temp\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
