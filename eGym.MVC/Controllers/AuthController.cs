@@ -63,5 +63,8 @@ namespace eGym.MVC.Controllers
             _identity.UserLogoutAsync().Wait();
             return Redirect("/");
         }
+
+        [HttpGet("/access-denied")]
+        public IActionResult AccessDenied() => View();
     }
 }

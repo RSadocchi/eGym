@@ -1,5 +1,4 @@
-﻿using eGym.Core.Security.Configuration;
-using eGym.Core.Security.Identity;
+﻿using eGym.Core.Security.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

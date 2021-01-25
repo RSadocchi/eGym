@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace eGym.Core.Security.Identity
 {
-    public class SignInManager : Microsoft.AspNetCore.Identity.SignInManager<eGym.Core.Security.Identity.User>
+    public class SignInManager : SignInManager<User>
     {
         public SignInManager(
             UserManager<User> userManager,

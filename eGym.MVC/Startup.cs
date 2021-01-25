@@ -141,6 +141,11 @@ namespace eGym.MVC
                 .AddSignInManager<SignInManager>()
                 .AddEntityFrameworkStores<SecurityDbContext>()
                 .AddDefaultTokenProviders();
+            //services.AddIdentityCore<User>()
+            //    .AddRoles<IdentityRole>()
+            //    .AddEntityFrameworkStores<SecurityDbContext>()
+            //    .AddSignInManager()
+            //    .AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -170,6 +175,7 @@ namespace eGym.MVC
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IComuniItalianiService, ComuniItalianiService>();
+            services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ITaxCodeService, TaxCodeService>();
             services.AddScoped<IAppUtilityService, AppUtilityService>();
@@ -179,7 +185,6 @@ namespace eGym.MVC
             #endregion
 
             #region Services
-            services.AddScoped<IIdentityService, IdentityService>();
             #endregion
             
             #endregion
@@ -287,14 +292,15 @@ namespace eGym.MVC
 
             app.UseRouting();
 
-            app.UseAuthorization();
-            app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseMiddleware<TelemetryGDPR>();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             //app.Use(async (context, next) =>
             //{
