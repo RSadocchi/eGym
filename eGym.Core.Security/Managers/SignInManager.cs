@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace eGym.Core.Security.Identity
 {
-    public class SignInManager : SignInManager<User>
+    public class SignInManager : Microsoft.AspNetCore.Identity.SignInManager<User>
     {
         public SignInManager(
             UserManager<User> userManager,
@@ -14,7 +14,8 @@ namespace eGym.Core.Security.Identity
             IUserClaimsPrincipalFactory<User> claimsFactory,
             IOptions<IdentityOptions> optionsAccessor,
             ILogger<SignInManager<User>> logger,
-            IAuthenticationSchemeProvider schemes) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
+            IAuthenticationSchemeProvider schemes,
+            IUserConfirmation<User> confirmation) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
         { }
     }
 }
