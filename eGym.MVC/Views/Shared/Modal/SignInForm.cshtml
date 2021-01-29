@@ -1,22 +1,51 @@
-﻿@{
+﻿@model SignInModel
+@{
     Layout = null;
 }
 <article id="sign-in-container">
     <h2 class="major">Sign in</h2>
-    <form method="post" action="#" name="sign-in-form">
+    <form asp-antiforgery="true" name="sign-in-form">
+        <input type="hidden" asp-for="Culture" value="it" />
+        <input type="hidden" asp-for="RememberMe" value="false" />
         <div class="fields">
             <div class="field half">
-                <label for="name">Username or email</label>
-                <input type="text" name="username" />
+                <label asp-for="Username">Username or email</label>
+                <input asp-for="Username" required />
             </div>
             <div class="field half">
-                <label for="email">Password</label>
-                <input type="password" name="password" />
+                <label asp-for="Password">Password</label>
+                <input type="password" asp-for="Password" />
             </div>
         </div>
         <ul class="actions">
-            <li><input type="submit" value="Sign in" class="primary" /></li>
+            <li><input type="button" value="Sign in" class="primary" onclick="performLogin(event)" /></li>
             <li><input type="reset" value="Reset" /></li>
         </ul>
     </form>
 </article>
+<script>
+    function performLogin(evt) {
+        evt.preventDefault();
+        showSpinner();
+        $.ajax({
+            url: '/sign-in',
+            method: 'post',
+            data: $('form[name="sign-in-form"]').serialize(),
+            success: function (res) {
+                if (res && res.loggedIn == true && res.disabled == false) {
+                    if (res.disabled == true || res.passwordExpired == true) {
+                        //TODO
+                    }
+                    else {
+                        location.href = res.redirect;
+                    }
+                }
+                hideSpinner();
+            },
+            error: function (err) {
+                console.log(err);
+                hideSpinner();
+            }
+        });
+    }
+</script>

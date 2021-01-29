@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace eGym.MVC.Controllers
@@ -29,21 +30,41 @@ namespace eGym.MVC.Controllers
         public async Task<IActionResult> SignIn(SignInModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
-
-            var user = await _identity.GetUserAsync(username: model.Username, getByEmail: true, getByUsername: true, getByPhoneNumber: false);
-            if (user == null) throw new Exception("User not found");
-
-            if (!await _identity.CheckPasswordAsync(user, model.Password))
-                throw new Exception("Invalid credetials");
-
-            var loggedIn = false;
-            if (!user.Disabled && user.PasswordExpirationDateTime.GetValueOrDefault(DateTime.MaxValue) > DateTime.Now)
             {
-                await _identity.LoginAsync(user, true);
+                return BadRequest(new
+                {
+                    Username = string.Join(" ", ModelState[nameof(SignInModel.Username)].Errors.Select(t => t.ErrorMessage)),
+                    Password = string.Join(" ", ModelState[nameof(SignInModel.Password)].Errors.Select(t => t.ErrorMessage))
+                });
             }
 
-            return Ok(new { loggedIn, redirect = "", disabled = user.Disabled, passwordExpired = user.PasswordExpirationDateTime.GetValueOrDefault(DateTime.MaxValue) <= DateTime.Now });
+            var user = await _identity.GetUserAsync(username: model.Username, getByEmail: true, getByUsername: true, getByPhoneNumber: false);
+            if (user == null) throw new Exception("Invalid credetials.");
+
+            if (!await _identity.CheckPasswordAsync(user, model.Password))
+                throw new Exception("Invalid credetials.");
+
+            var loggedIn = false;
+            string redirect = string.Empty;
+            if (!user.Disabled) //&& user.PasswordExpirationDateTime.GetValueOrDefault(DateTime.MaxValue) > DateTime.Now)
+            {
+                await _identity.LoginAsync(user, true);
+                loggedIn = true;
+
+                if (await _identity.CurrentUserHasClaimAsync(new System.Security.Claims.Claim(Const_ClaimTypes.ADMINISTRATOR, Const_ClaimValues.DefaultValue)))
+                    redirect = "/admin/dashboard";
+                else
+                    redirect = "/";
+            }
+
+            return Ok(new 
+            { 
+                loggedIn, 
+                redirect,
+                disabled = user.Disabled, 
+                passwordExpired = user.PasswordExpirationDateTime.GetValueOrDefault(DateTime.MaxValue) <= DateTime.Now,
+                message = ""
+            });
 
         }
 
