@@ -55,7 +55,6 @@
     <Folder Include="DocRepository\Data\" />
     <Folder Include="DocRepository\Temp\" />
     <Folder Include="Resources\" />
-    <Folder Include="scripts\" />
   </ItemGroup>
 
   <ItemGroup>

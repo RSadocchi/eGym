@@ -51,7 +51,7 @@ namespace eGym.MVC.Controllers
                 await _identity.LoginAsync(user, true);
                 loggedIn = true;
 
-                if (await _identity.CurrentUserHasClaimAsync(new System.Security.Claims.Claim(Const_ClaimTypes.ADMINISTRATOR, Const_ClaimValues.DefaultValue)))
+                if (await _identity.UserHasClaimAsync(user, new System.Security.Claims.Claim(Const_ClaimTypes.ADMINISTRATOR, Const_ClaimValues.DefaultValue)))
                     redirect = "/admin/dashboard";
                 else
                     redirect = "/";
