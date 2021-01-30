@@ -150,8 +150,8 @@ namespace eGym.MVC
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                options.LoginPath = "/sign-in";
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                options.LoginPath = "/";
                 options.AccessDeniedPath = "/access-denied";
                 options.SlidingExpiration = true;
             });

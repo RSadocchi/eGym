@@ -1,0 +1,22 @@
+﻿@{
+    Layout = null;
+}
+<div class="item-timeline timeline-new">
+    <div class="t-dot">
+        <div class="t-warning"><partial name="~/Areas/Admin/Views/Shared/svg/feather-file.cshtml" /></div>
+    </div>
+    <div class="t-content">
+        <div class="t-uppercontent">
+            <h5>Certificati medici in scadenza</h5>
+            <span class="text-right">
+                <span class="d-block">@(DateTime.Now.ToString("ddd dd MMM yyyy"))</span>
+                <small class="d-block">@(DateTime.Now.ToString("HH:mm"))</small>
+            </span>
+        </div>
+        <p><span class="mr-1 font-weight-bold">8</span>Server Logs</p>
+        <div class="tags">
+            <div class="badge badge-warning"><span class="mr-1 font-weight-bold">5</span>Agonistici</div>
+            <div class="badge badge-primary"><span class="mr-1 font-weight-bold">3</span>Sportivi</div>
+        </div>
+    </div>
+</div>

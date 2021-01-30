@@ -23,5 +23,9 @@
     <ProjectReference Include="..\eGym.Core.Security\eGym.Core.Security.csproj" />
     <ProjectReference Include="..\eGym.Core.SeedWork\eGym.Core.SeedWork.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AggregateModels\Nuova cartella\" />
+  </ItemGroup>
   
 </Project>
