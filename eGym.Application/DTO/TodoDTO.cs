@@ -36,11 +36,15 @@ namespace eGym.Application.DTO
                 AllowNullDestinationValues = true;
 
                 CreateMap<Todo_Master, TodoDTO>()
+                    //.ForMember(m => m.TD_Priority, o => o.MapFrom(s => (int)s.TD_Priority))
+                    //.ForMember(m => m.TD_Deadline, o => o.MapFrom(s => (int)s.TD_Deadline))
                     .ForMember(m => m.Priority, o => o.MapFrom(s => s.TD_Priority.ToCssColor()));
 
                 CreateMap<TodoDTO, Todo_Master>()
                     .EqualityComparison((s, d) => s.TD_ID != 0 && s.TD_ID == d.TD_ID)
                     .ForMember(m => m.TD_ID, o => o.Ignore());
+                    //.ForMember(m => m.TD_Priority, o => o.MapFrom(s => (TodoPriorityEnum)s.TD_Priority))
+                    //.ForMember(m => m.TD_Deadline, o => o.MapFrom(s => (TodoDeadlineEnum)s.TD_Deadline));
             }
         }
     }

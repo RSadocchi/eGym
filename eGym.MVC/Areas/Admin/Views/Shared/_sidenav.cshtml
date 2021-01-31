@@ -20,8 +20,8 @@
 
         <ul class="list-unstyled menu-categories" id="sideavLeftMenu">
 
-            <li class="menu active">
-                <a href="/admin/dashboard" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+            <li class="menu">
+                <a href="/admin/dashboard" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <partial name="~/Areas/Admin/Views/Shared/svg/feather-home.cshtml" />
                         <span>Dashboard</span>
@@ -63,3 +63,15 @@
     </nav>
 
 </div>
+<script>
+    $(function () {
+        let elm = $(`a[href="${location.pathname}"]`);
+        if (elm) {
+            elm.attr('aria-expanded', 'true');
+            elm.parent().addClass('active');
+            if (elm.parent().parent().hasClass('collapse submenu')) {
+                elm.parent().parent().addClass('show');
+            }
+        }
+    });
+</script>
