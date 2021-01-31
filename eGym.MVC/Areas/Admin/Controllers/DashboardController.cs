@@ -17,5 +17,8 @@ namespace eGym.MVC.Areas.Admin.Controllers
         {
             return View();
         }
+
+        [HttpGet("todo")]
+        public async Task<IActionResult> Todo() => View();
     }
 }

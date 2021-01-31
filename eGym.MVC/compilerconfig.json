@@ -4,6 +4,10 @@
     "inputFile": "wwwroot/scss/custom.scss"
   },
   {
+    "outputFile": "wwwroot/css/backoffice-custom.css",
+    "inputFile": "wwwroot/scss/backoffice-custom.scss"
+  },
+  {
     "outputFile": "wwwroot/js/custom.min.js",
     "inputFile": "wwwroot/js/custom.js"
   }

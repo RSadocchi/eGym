@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="todo-item all-list">
+    <div class="todo-item-inner">
+        <div class="n-chk text-center">
+            <label class="new-control new-checkbox checkbox-primary">
+                <input type="checkbox" class="new-control-input inbox-chkbox">
+                <span class="new-control-indicator"></span>
+            </label>
+            <span class="important-star warning" style="margin-right:13px;">
+                <partial name="~/Areas/Admin/Views/Shared/svg/feather-star.cshtml" />
+            </span>
+        </div>
+
+        <div class="todo-content">
+            <h5 class="todo-heading" data-todoHeading="Meeting with Shaun Park at 4:50pm">Meeting with Shaun Park at 4:50pm</h5>
+            <p class="meta-date">@(DateTime.Now.ToString("ddd dd MMM yyyy"))</p>
+            <p class="todo-text" data-todoHtml="<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>" data-todoText='{"ops":[{"insert":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.\n"}]}'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar feugiat consequat. Duis lacus nibh, sagittis id varius vel, aliquet non augue. Vivamus sem ante, ultrices at ex a, rhoncus ullamcorper tellus. Nunc iaculis eu ligula ac consequat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum mattis urna neque, eget posuere lorem tempus non. Suspendisse ac turpis dictum, convallis est ut, posuere sem. Etiam imperdiet aliquam risus, eu commodo urna vestibulum at. Suspendisse malesuada lorem eu sodales aliquam.</p>
+        </div>
+
+        <div class="priority-dropdown custom-dropdown-icon">
+            <div class="dropdown p-dropdown">
+                <a class="dropdown-toggle warning" href="#" role="button" id="dropdownMenuLink-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <partial name="~/Areas/Admin/Views/Shared/svg/feather-alert-octagon.cshtml" />
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink-1">
+                    <a class="dropdown-item danger" href="javascript:void(0);">
+                        <partial name="~/Areas/Admin/Views/Shared/svg/feather-alert-octagon.cshtml" />
+                        High
+                    </a>
+                    <a class="dropdown-item warning" href="javascript:void(0);">
+                        <partial name="~/Areas/Admin/Views/Shared/svg/feather-alert-octagon.cshtml" />
+                        Middle
+                    </a>
+                    <a class="dropdown-item primary" href="javascript:void(0);">
+                        <partial name="~/Areas/Admin/Views/Shared/svg/feather-alert-octagon.cshtml" />
+                        Low
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-dropdown custom-dropdown-icon">
+            <div class="dropdown">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <partial name="~/Areas/Admin/Views/Shared/svg/feather-more-vertical.cshtml" />
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink-2">
+                    <a class="edit dropdown-item" href="javascript:void(0);">Edit</a>
+                    <a class="important dropdown-item" href="javascript:void(0);">Important</a>
+                    <a class="dropdown-item delete" href="javascript:void(0);">Delete</a>
+                    <a class="dropdown-item permanent-delete" href="javascript:void(0);">Permanent Delete</a>
+                    <a class="dropdown-item revive" href="javascript:void(0);">Revive Task</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
