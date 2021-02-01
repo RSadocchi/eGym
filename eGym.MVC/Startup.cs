@@ -183,9 +183,11 @@ namespace eGym.MVC
             #region Repositories
             services.AddScoped<ILogRepository, LogRepository>();
             services.AddScoped<ICMSRepository, CMSRepository>();
+            services.AddScoped<ITodoRepository, TodoRepository>();
             #endregion
 
             #region Services
+            services.AddTransient<ITodoService, TodoService>();
             #endregion
 
             #endregion

@@ -1,4 +1,7 @@
-﻿using eGym.Core.Security;
+﻿using AutoMapper;
+using eGym.Application.DTO;
+using eGym.Application.Services;
+using eGym.Core.Security;
 using eGym.MVC.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +17,18 @@ namespace eGym.MVC.Areas.Admin.Controllers
     [Authorize(Policy = Const_ClaimTypes.ADMINISTRATOR)]
     public class DashboardController : Controller
     {
+        readonly IMapper _mapper;
+        readonly ITodoService _todoService;
+
+        public DashboardController(
+            IMapper mapper,
+            ITodoService todoService)
+        {
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _todoService = todoService ?? throw new ArgumentNullException(nameof(todoService));
+        }
+
+
         public IActionResult Index()
         {
             return View();
@@ -25,7 +40,9 @@ namespace eGym.MVC.Areas.Admin.Controllers
         [HttpPost("todo-list")]
         public async Task<IActionResult> TodoList(TodoFilter filter)
         {
-
+            var entities = await _todoService.ListAsync(statuses: filter?.Statuses, searchString: filter?.SearchString);
+            var dtos = _mapper.Map(entities, new List<TodoDTO>());
+            return PartialView("", dtos);
         }
     }
 }
