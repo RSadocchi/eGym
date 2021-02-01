@@ -25,8 +25,8 @@ namespace eGym.Application.DTO
         public short TD_StatusID { get; set; }
         public DateTime? TD_StatusDate { get; set; }
 
-        public string Priority { get; set; }
-
+        public string PriorityCss { get; set; }
+        public string StatusCss { get; set; }
 
         public class ProfileConfig : Profile
         {
@@ -38,7 +38,8 @@ namespace eGym.Application.DTO
                 CreateMap<Todo_Master, TodoDTO>()
                     //.ForMember(m => m.TD_Priority, o => o.MapFrom(s => (int)s.TD_Priority))
                     //.ForMember(m => m.TD_Deadline, o => o.MapFrom(s => (int)s.TD_Deadline))
-                    .ForMember(m => m.Priority, o => o.MapFrom(s => s.TD_Priority.ToCssColor()));
+                    .ForMember(m => m.PriorityCss, o => o.MapFrom(s => s.TD_Priority.ToCssPriority()))
+                    .ForMember(m => m.StatusCss, o => o.MapFrom(s => EN_TodoStatus.FromID(s.TD_StatusID).ToCssStatus()));
 
                 CreateMap<TodoDTO, Todo_Master>()
                     .EqualityComparison((s, d) => s.TD_ID != 0 && s.TD_ID == d.TD_ID)

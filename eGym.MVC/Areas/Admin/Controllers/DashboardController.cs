@@ -1,4 +1,5 @@
 ﻿using eGym.Core.Security;
+using eGym.MVC.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,5 +21,11 @@ namespace eGym.MVC.Areas.Admin.Controllers
 
         [HttpGet("todo")]
         public async Task<IActionResult> Todo() => View();
+
+        [HttpPost("todo-list")]
+        public async Task<IActionResult> TodoList(TodoFilter filter)
+        {
+
+        }
     }
 }

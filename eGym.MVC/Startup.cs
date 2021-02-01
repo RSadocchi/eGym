@@ -182,11 +182,12 @@ namespace eGym.MVC
 
             #region Repositories
             services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<ICMSRepository, CMSRepository>();
             #endregion
 
             #region Services
             #endregion
-            
+
             #endregion
 
             #region LOCALIZATION
