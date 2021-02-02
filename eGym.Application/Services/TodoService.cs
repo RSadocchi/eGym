@@ -9,7 +9,7 @@ namespace eGym.Application.Services
 {
     public interface ITodoService
     {
-        Task<IQueryable<Todo_Master>> ListAsync(int[] statuses = null, string searchString = null);
+        Task<IQueryable<Todo_Master>> ListAsync(short[] statuses = null, string searchString = null);
         Task<Todo_Master> FindAsync(int todoId);
     }
 
@@ -29,7 +29,7 @@ namespace eGym.Application.Services
         public async Task<Todo_Master> FindAsync(int todoId)
             => await _repository.FindAsync(todoId);
 
-        public async Task<IQueryable<Todo_Master>> ListAsync(int[] statuses = null, string searchString = null)
+        public async Task<IQueryable<Todo_Master>> ListAsync(short[] statuses = null, string searchString = null)
         {
             var spec = Spec.Any<Todo_Master>();
             if (statuses?.Length > 0) spec &= TodoSpecifications.ByStatusIDs(statuses);

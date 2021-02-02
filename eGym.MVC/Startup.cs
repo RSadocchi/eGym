@@ -9,6 +9,7 @@ using eGym.Core.Log;
 using eGym.Core.Security;
 using eGym.Core.Security.Identity;
 using eGym.Core.SeedWork;
+using eGym.MVC.Binders;
 using eGym.MVC.Middleware;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -222,7 +223,10 @@ namespace eGym.MVC
                 });
 
             services
-               .AddControllersWithViews()
+                .AddMvc(opt =>
+                {
+                    opt.ModelBinderProviders.Insert(0, new CustomBinderProvider());
+                })
                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                .AddDataAnnotationsLocalization()
                .AddFluentValidation(opt =>
