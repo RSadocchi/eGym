@@ -14,9 +14,9 @@ namespace eGym.Application.DTO
     {
         public int TD_ID { get; set; }
         public DateTime TD_CreationDate { get; set; }
-        public TodoPriorityEnum TD_Priority { get; set; }
+        public int TD_Priority { get; set; }
         public bool TD_Important { get; set; }
-        public TodoDeadlineEnum TD_Deadline { get; set; }
+        public int TD_Deadline { get; set; }
         public DateTime? TD_DeadlineDate { get; set; }
         public TimeSpan? TD_DeadlineTime { get; set; }
         public string TD_Title { get; set; }

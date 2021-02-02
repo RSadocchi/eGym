@@ -44,5 +44,11 @@ namespace eGym.MVC.Areas.Admin.Controllers
             var dtos = _mapper.Map(entities, new List<TodoDTO>());
             return PartialView("TodoList", dtos);
         }
+
+        [HttpPost("todo-save")]
+        public async Task<IActionResult> TodoSave(TodoDTO dto)
+        {
+            return Ok();
+        }
     }
 }
