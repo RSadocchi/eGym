@@ -65,11 +65,13 @@
         </div>
     </div>
 
+    <!-- Modal -->
     <div class="modal fade" id="todoShowListItem" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
+
                 <div class="modal-body">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="modal"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    <partial name="~/Areas/Admin/Views/Shared/svg/feather-x.cshtml" />
                     <div class="compose-box">
                         <div class="compose-content">
                             <h5 class="task-heading"></h5>
@@ -77,17 +79,23 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Close</button>
+                    <button class="btn" data-dismiss="modal">
+                        <partial name="~/Areas/Admin/Views/Shared/svg/feather-trash.cshtml" />
+                        Close
+                    </button>
                 </div>
+
+
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
     <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
+
                 <div class="modal-body">
                     <partial name="~/Areas/Admin/Views/Shared/svg/feather-x.cshtml" />
                     <div class="compose-box">
@@ -118,11 +126,13 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
                     <button class="btn add-tsk">Add Task</button>
                     <button class="btn edit-tsk">Save</button>
                 </div>
+
             </div>
         </div>
     </div>
