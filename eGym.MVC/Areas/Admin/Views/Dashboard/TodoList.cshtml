@@ -7,11 +7,11 @@
     {
         foreach (var dto in Model)
         {
-            <partial name="TodoListItem" />
+            <partial name="TodoListItem" model="dto" />
         }
     }
     else
     {
-        <h2></h2>
+        <h2>No data</h2>
     }
 </div>

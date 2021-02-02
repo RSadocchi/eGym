@@ -1,3 +1,6 @@
+using AutoMapper;
+using AutoMapper.EquivalencyExpression;
+using eGym.Application.DTO;
 using eGym.Application.Option;
 using eGym.Application.Services;
 using eGym.Core.Domain;
@@ -229,7 +232,13 @@ namespace eGym.MVC
             #endregion
 
             #region AUTOMAPPER
+            IMapper mapper = new MapperConfiguration(c =>
+            {
+                c.AddCollectionMappers();
 
+                c.AddProfile(new TodoDTO.ProfileConfig());
+            }).CreateMapper();
+            services.AddSingleton(mapper);
             #endregion
 
             #region FLUENT VALIDATION

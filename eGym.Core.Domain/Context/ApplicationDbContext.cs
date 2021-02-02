@@ -49,6 +49,8 @@ namespace eGym.Core.Domain
         public DbSet<Sport_Master> Sport_Masters { get; set; }
         public DbSet<Sport_Schedule> Sport_Schedules { get; set; }
 
+        public DbSet<Todo_Master> Todo_Masters { get; set; }
+
         public DbSet<Country> Countries { get; set; }
         #endregion
 

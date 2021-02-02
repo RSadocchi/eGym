@@ -42,7 +42,7 @@ namespace eGym.MVC.Areas.Admin.Controllers
         {
             var entities = await _todoService.ListAsync(statuses: filter?.Statuses, searchString: filter?.SearchString);
             var dtos = _mapper.Map(entities, new List<TodoDTO>());
-            return PartialView("", dtos);
+            return PartialView("TodoList", dtos);
         }
     }
 }
