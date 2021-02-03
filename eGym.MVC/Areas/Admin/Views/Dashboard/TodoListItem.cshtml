@@ -54,11 +54,11 @@
                     <partial name="~/Areas/Admin/Views/Shared/svg/feather-more-vertical.cshtml" />
                 </a>
                 <div class="dropdown-menu" aria-labelledby="actionDrp-@(Model.TD_ID)">
-                    <a class="edit dropdown-item" href="#" onclick="editTask(event, @(Model.TD_ID))">Edit</a>
-                    <a class="important dropdown-item" href="#" onclick="toggleImportant(event, @(Model.TD_ID), @((!Model.TD_Important).ToString().ToLower()))">Important</a>
-                    <a class="dropdown-item delete" href="javascript:void(0);">Delete</a>
-                    <a class="dropdown-item permanent-delete" href="javascript:void(0);">Permanent Delete</a>
-                    <a class="dropdown-item revive" href="javascript:void(0);">Revive Task</a>
+                    <a class="dropdown-item edit" href="#" onclick="editTask(event, @(Model.TD_ID))">Edit</a>
+                    <a class="dropdown-item important" href="#" onclick="toggleImportant(event, @(Model.TD_ID), @((!Model.TD_Important).ToString().ToLower()))">Important</a>
+                    <a class="dropdown-item delete" href="#" onclick="changeStatus(event, @(Model.TD_ID), @(EN_TodoStatus.Deleted.ID))">Delete</a>
+                    <a class="dropdown-item permanent-delete" href="#">Permanent Delete</a>
+                    <a class="dropdown-item revive" href="#" onclick="changeStatus(event, @(Model.TD_ID), @(EN_TodoStatus.Scheduled.ID))">Revive Task</a>
                 </div>
             </div>
         </div>

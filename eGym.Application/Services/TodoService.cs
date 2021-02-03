@@ -14,6 +14,7 @@ namespace eGym.Application.Services
         Task<Todo_Master> FindAsync(int todoId);
         Task<TodoDTO> SaveAsync(TodoDTO dto = null, Todo_Master entity = null);
         Task<bool> ToggleImportantAndPriorityAsync(int todoId, bool? isImportant = null, int? priorityId = null, bool? isDone = null);
+        Task<bool> ChangeStatusAsync(int todoId, short statusId);
     }
 
     public class TodoService : ITodoService
@@ -73,6 +74,22 @@ namespace eGym.Application.Services
                 (isDone.Value == true ? EN_TodoStatus.Completed.ID : EN_TodoStatus.Scheduled.ID) :
                 todo.TD_StatusID;
             todo.TD_StatusDate = isDone.HasValue ? DateTime.Now : todo.TD_StatusDate;
+
+            await _repository.UpdateAsync(todo);
+            await _repository.UnitOfWork.SaveEntitiesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> ChangeStatusAsync(int todoId, short statusId)
+        {
+            var todo = await FindAsync(todoId: todoId);
+            if (todo == null) return false;
+
+            if (EN_TodoStatus.FromID(statusId) == null) return false;
+
+            todo.TD_StatusDate = todo.TD_StatusID == statusId ? todo.TD_StatusDate : DateTime.Now;
+            todo.TD_StatusID = statusId;
 
             await _repository.UpdateAsync(todo);
             await _repository.UnitOfWork.SaveEntitiesAsync();

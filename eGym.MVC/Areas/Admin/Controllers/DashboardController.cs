@@ -29,7 +29,6 @@ namespace eGym.MVC.Areas.Admin.Controllers
             _todoService = todoService ?? throw new ArgumentNullException(nameof(todoService));
         }
 
-
         public IActionResult Index()
         {
             return View();
@@ -82,22 +81,29 @@ namespace eGym.MVC.Areas.Admin.Controllers
         [HttpGet("todo-toggle/{todoId}/important/{isImportant}")]
         public async Task<IActionResult> TodoToggleImportant(int todoId, bool isImportant)
         {
-            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: isImportant, priorityId: null, isDone: null);
-            return Ok();
+            var success = await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: isImportant, priorityId: null, isDone: null);
+            return Ok(new { success });
         }
 
         [HttpGet("todo-toggle/{todoId}/priority/{priorityId}")]
         public async Task<IActionResult> TodoTogglePriority(int todoId, int priorityId)
         {
-            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: null, priorityId: priorityId, isDone: null);
-            return Ok();
+            var success = await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: null, priorityId: priorityId, isDone: null);
+            return Ok(new { success });
         }
 
         [HttpGet("todo-toggle/{todoId}/done/{isDone}")]
         public async Task<IActionResult> TodoToggleDone(int todoId, bool isDone)
         {
-            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: null, priorityId: null, isDone: isDone);
-            return Ok();
+            var success = await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: null, priorityId: null, isDone: isDone);
+            return Ok(new { success });
+        }
+
+        [HttpGet("todo-change/{todoId}/status/{statusId}")]
+        public async Task<IActionResult> TodoChangeStatus(int todoId, short statusId)
+        {
+            var success = await _todoService.ChangeStatusAsync(todoId: todoId, statusId: statusId);
+            return Ok(new { success });
         }
     }
 }
