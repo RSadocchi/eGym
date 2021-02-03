@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using eGym.Application.DTO;
 using eGym.Application.Services;
+using eGym.Core.Domain;
 using eGym.Core.Security;
 using eGym.MVC.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +46,19 @@ namespace eGym.MVC.Areas.Admin.Controllers
             return PartialView("TodoList", dtos);
         }
 
+        [HttpGet("todo-badge")]
+        public async Task<IActionResult> TodoBadgeCalculator()
+        {
+            var entities = (await _todoService.ListAsync(statuses: EN_TodoStatus.GetAll().Select(t => t.ID).ToArray(), searchString: null)).ToList();
+            return Ok(new
+            {
+                todo = entities.Where(t => EN_TodoStatus.GetAll().Where(t => t.ID != EN_TodoStatus.Completed.ID && t.ID != EN_TodoStatus.Deleted.ID).Select(t => t.ID).Contains(t.TD_StatusID)).Count(),
+                important = entities.Where(t => t.TD_Important == true && EN_TodoStatus.GetAll().Where(t => t.ID != EN_TodoStatus.Completed.ID && t.ID != EN_TodoStatus.Deleted.ID).Select(t => t.ID).Contains(t.TD_StatusID)).Count(),
+                done = entities.Where(t => t.TD_StatusID == EN_TodoStatus.Completed.ID).Count(),
+                trash = entities.Where(t => t.TD_StatusID == EN_TodoStatus.Deleted.ID).Count()
+            });
+        }
+
         [HttpGet("todo-add")]
         [HttpGet("todo-edit/{id}")]
         public async Task<IActionResult> TodoEdit(int? id)
@@ -63,6 +77,20 @@ namespace eGym.MVC.Areas.Admin.Controllers
         {
             await _todoService.SaveAsync(dto: dto);
             return Ok(new { success = true });
+        }
+
+        [HttpGet("todo-toggle/{todoId}/important/{isImportant}")]
+        public async Task<IActionResult> TodoToggleImportant(int todoId, bool isImportant)
+        {
+            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: isImportant, priorityId: null);
+            return Ok();
+        }
+
+        [HttpGet("todo-toggle/{todoId}/priority/{priorityId}")]
+        public async Task<IActionResult> TodoTogglePriority(int todoId, int priorityId)
+        {
+            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: null, priorityId: priorityId);
+            return Ok();
         }
     }
 }

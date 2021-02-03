@@ -14,6 +14,7 @@
   padding: 20px 10px; }
   .important-star-container .important-star {
     margin-top: 5px;
+    cursor: pointer;
     display: none;
     visibility: hidden; }
   .important-star-container.todo-task-important .important-star {

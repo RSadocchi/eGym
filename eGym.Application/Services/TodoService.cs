@@ -13,6 +13,7 @@ namespace eGym.Application.Services
         Task<IQueryable<Todo_Master>> ListAsync(short[] statuses = null, string searchString = null);
         Task<Todo_Master> FindAsync(int todoId);
         Task<TodoDTO> SaveAsync(TodoDTO dto = null, Todo_Master entity = null);
+        Task<bool> ToggleImportantAndPriorityAsync(int todoId, bool? isImportant = null, int? priorityId = null);
     }
 
     public class TodoService : ITodoService
@@ -57,6 +58,21 @@ namespace eGym.Application.Services
             dto ??= new TodoDTO();
             _mapper.Map(entity, dto);
             return dto;
+        }
+
+        public async Task<bool> ToggleImportantAndPriorityAsync(int todoId, bool? isImportant = null, int? priorityId = null)
+        {
+            if (!isImportant.HasValue && !priorityId.HasValue) return false;
+
+            var todo = await FindAsync(todoId: todoId);
+            if (todo == null) return false;
+
+            todo.TD_Important = isImportant ?? todo.TD_Important;
+            todo.TD_Priority = priorityId.HasValue ? (TodoPriorityEnum)priorityId.Value : todo.TD_Priority;
+            await _repository.UpdateAsync(todo);
+            await _repository.UnitOfWork.SaveEntitiesAsync();
+
+            return true;
         }
     }
 }

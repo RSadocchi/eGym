@@ -408,7 +408,7 @@ $('.tab-title .nav-pills a.nav-link').on('click', function (event) {
     $(this).parents('.mail-box-container').find('.mail-overlay').removeClass('mail-overlay-show')
 })
 
- Validation Process
+ //Validation Process
 
   var $_getValidationField = document.getElementsByClassName('validation-text');
 

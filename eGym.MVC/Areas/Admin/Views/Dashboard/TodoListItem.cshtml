@@ -19,7 +19,7 @@
         </div>
 
         <div class="important-star-container @(Model.ImportantCss)">
-            <span class="important-star warning">
+            <span class="important-star warning" onclick="toggleImportant(event, @(Model.TD_ID), @((!Model.TD_Important).ToString().ToLower()))">
                 <partial name="~/Areas/Admin/Views/Shared/svg/feather-star.cshtml" />
             </span>
         </div>
@@ -31,15 +31,15 @@
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="priorityDrp-@(Model.TD_ID)">
-                    <a class="dropdown-item danger" href="javascript:void(0);">
+                    <a class="dropdown-item danger" href="#" onclick="togglePriority(event, @(Model.TD_ID), @((int)TodoPriorityEnum.Hight))">
                         <partial name="~/Areas/Admin/Views/Shared/svg/feather-alert-octagon.cshtml" />
                         High
                     </a>
-                    <a class="dropdown-item warning" href="javascript:void(0);">
+                    <a class="dropdown-item warning" href="#" onclick="togglePriority(event, @(Model.TD_ID), @((int)TodoPriorityEnum.Medium))">
                         <partial name="~/Areas/Admin/Views/Shared/svg/feather-alert-octagon.cshtml" />
                         Middle
                     </a>
-                    <a class="dropdown-item primary" href="javascript:void(0);">
+                    <a class="dropdown-item primary" href="#" onclick="togglePriority(event, @(Model.TD_ID), @((int)TodoPriorityEnum.Low))">
                         <partial name="~/Areas/Admin/Views/Shared/svg/feather-alert-octagon.cshtml" />
                         Low
                     </a>
@@ -53,8 +53,8 @@
                     <partial name="~/Areas/Admin/Views/Shared/svg/feather-more-vertical.cshtml" />
                 </a>
                 <div class="dropdown-menu" aria-labelledby="actionDrp-@(Model.TD_ID)">
-                    <a class="edit dropdown-item" id="editTask" href="#" onclick="editTask(event, @(Model.TD_ID))">Edit</a>
-                    <a class="important dropdown-item" href="javascript:void(0);">Important</a>
+                    <a class="edit dropdown-item" href="#" onclick="editTask(event, @(Model.TD_ID))">Edit</a>
+                    <a class="important dropdown-item" href="#" onclick="toggleImportant(event, @(Model.TD_ID), @((!Model.TD_Important).ToString().ToLower()))">Important</a>
                     <a class="dropdown-item delete" href="javascript:void(0);">Delete</a>
                     <a class="dropdown-item permanent-delete" href="javascript:void(0);">Permanent Delete</a>
                     <a class="dropdown-item revive" href="javascript:void(0);">Revive Task</a>
