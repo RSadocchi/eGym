@@ -45,7 +45,8 @@ namespace eGym.Application.Services
             if (dto == null && entity == null) throw new Exception($"{nameof(dto)} and {nameof(entity)} they were both null.");
             if (dto != null && entity == null)
             {
-                entity = new Todo_Master();
+                if (dto.TD_ID > 0) entity = await FindAsync(todoId: dto.TD_ID);
+                entity ??= new Todo_Master();
                 _mapper.Map(dto, entity);
             }
 

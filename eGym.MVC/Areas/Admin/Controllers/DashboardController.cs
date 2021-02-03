@@ -53,7 +53,7 @@ namespace eGym.MVC.Areas.Admin.Controllers
             if (id.HasValue && id.Value > 0)
             {
                 var todo = await _todoService.FindAsync(id.Value);
-                _mapper.Map(todo, new TodoDTO());
+                _mapper.Map(todo, dto);
             }
             return PartialView("TodoEditForm", dto);
         }

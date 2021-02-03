@@ -63,6 +63,12 @@
 </div>
 <modal-footer>
     <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
-    <button class="btn add-tsk" type="button" onclick="saveTodo(event)">Add Task</button>
-    <button class="btn edit-tsk" type="button" onclick="saveTodo(event)">Save</button>
+    @if (Model.TD_ID <= 0)
+    {
+        <button class="btn add-tsk" type="button" onclick="saveTodo(event)">Add Task</button>
+    }
+    else
+    {
+        <button class="btn edit-tsk" type="button" onclick="saveTodo(event)">Save</button>
+    }
 </modal-footer>

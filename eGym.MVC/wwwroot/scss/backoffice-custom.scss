@@ -20,25 +20,19 @@
     }
 }
 
-.todo-item {
+.important-star-container {
+    padding: 20px 10px;
 
-    .todo-item-inner {
-        .n-chk {
-            .important-star {
-                display: none;
-                visibility: hidden;
-            }
-        }
+    .important-star {
+        margin-top: 5px;
+        display: none;
+        visibility: hidden;
     }
 
     &.todo-task-important {
-        .todo-item-inner {
-            .n-chk {
-                .important-star {
-                    display: block;
-                    visibility: visible;
-                }
-            }
+        .important-star {
+            display: block;
+            visibility: visible;
         }
     }
 }

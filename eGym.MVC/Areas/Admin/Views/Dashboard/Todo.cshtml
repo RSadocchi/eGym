@@ -94,148 +94,14 @@
 
     <modal-container id="addTaskModal" size="lg">
         <modal-body id="addTaskModalBody">
-            <!--<partial name="~/Areas/Admin/Views/Shared/svg/feather-x.cshtml" />
-            <div class="compose-box">
-                <div class="compose-content" id="addTaskModalTitle">
-                    <h5 class="">Add Task</h5>
-                    <form name="todo-save-form">
-                        <input type="hidden" name="@(nameof(TodoDTO.TD_ID))" value="0" />
-                        <input type="hidden" name="@(nameof(TodoDTO.TD_CreationDate))" value="@(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))" />
-                        <input type="hidden" name="@(nameof(TodoDTO.TD_Deadline))" value="@((int)TodoDeadlineEnum.WhenIsPossible)" />
-                        <input type="hidden" name="@(nameof(TodoDTO.TD_StatusID))" value="@(EN_TodoStatus.Scheduled.ID)" />
-                        <div class="row">
-                            <div class="col-md-12 d-flex flex-row justify-content-around align-items-center">
-                                <div class="mb-4">
-                                    <div class="n-chk d-flex flex-row justify-content-start align-items-center">
-                                        <label class="switch s-icons s-outline s-outline-warning m-0">
-                                            <input type="checkbox" name="@(nameof(TodoDTO.TD_Important))" value="true">
-                                            <span class="slider round"></span>
-                                        </label>
-                                        <span class="new-chk-content">Important</span>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <div class="n-chk">
-                                        <label class="new-control new-radio new-radio-text radio-primary">
-                                            <input type="radio" class="new-control-input" name="@(nameof(TodoDTO.TD_Priority))" value="@((int)TodoPriorityEnum.Low)">
-                                            <span class="new-control-indicator"></span><span class="new-radio-content">Low priority</span>
-                                        </label>
-                                        <label class="new-control new-radio new-radio-text radio-warning">
-                                            <input type="radio" class="new-control-input" name="@(nameof(TodoDTO.TD_Priority))" value="@((int)TodoPriorityEnum.Medium)">
-                                            <span class="new-control-indicator"></span><span class="new-radio-content">Medium priority</span>
-                                        </label>
-                                        <label class="new-control new-radio new-radio-text radio-danger">
-                                            <input type="radio" class="new-control-input" name="@(nameof(TodoDTO.TD_Priority))" value="@((int)TodoPriorityEnum.Hight)">
-                                            <span class="new-control-indicator"></span><span class="new-radio-content">Hight priority</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="d-flex mail-to mb-4">
-                                    <partial name="~/Areas/Admin/Views/Shared/svg/feather-edit-3.cshtml" />
-                                    <div class="w-100">
-                                        <input name="@(nameof(TodoDTO.TD_Title))" id="task" class="form-control" placeholder="Title*" required />
-                                        <span class="validation-text"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex mail-subject mb-4">
-                            <partial name="~/Areas/Admin/Views/Shared/svg/feather-file-text.cshtml" />
-                            <div class="w-100">-->
-            @*<div id="taskdescription" class=""></div>*@
-            <!--<textarea name="@(nameof(TodoDTO.TD_Content))" class="form-control" placeholder="Compose an epic..."></textarea>
-                                <span class="validation-text"></span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <modal-footer>
-                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
-                <button class="btn add-tsk" type="button" onclick="saveTodo(event)">Add Task</button>
-                <button class="btn edit-tsk" type="button" onclick="saveTodo(event)">Save</button>
-            </modal-footer>-->
         </modal-body>
     </modal-container>
 
 </div>
 
+<script src="~/js/admin/apps/todo.custom.js"></script>
 <script>
-
     $(function () {
         loadTodo();
     });
-
-    $('#addTask').on('click', function (event) {
-        event.preventDefault();
-
-        $.ajax({
-            url: '/admin/dashboard/todo-add',
-            method: 'get',
-            success: function (res) {
-                $('#addTaskModalBody').html(res);
-                $('.add-tsk').show();
-                $('.edit-tsk').hide();
-                $('#addTaskModal').modal('show');
-                const ps = new PerfectScrollbar('.todo-box-scroll', {
-                    suppressScrollX: true
-                });
-            },
-            error: function (err) {
-                console.error(err);
-            }
-        });
-    });
-
-    function loadTodo() {
-        let statuses = '';
-        let important = false;
-        let searchString = $('#searchString').val();
-
-        $('.nav-link.list-actions').each(function () {
-            if ($(this).hasClass('active')) {
-                statuses = $(this).attr('data-statuses');
-                important = $(this).attr('data-important') == 'true';
-            }
-        });
-
-        $.ajax({
-            url: '/admin/dashboard/todo-list',
-            method: 'post',
-            data: { statuses: statuses, searchString: searchString, important: important },
-            success: function (res) {
-                $('#todo-list-container').html(res);
-            },
-            error: function (err) {
-                console.error(err);
-            }
-        });
-    }
-
-    function saveTodo(evt) {
-        evt.preventDefault();
-        //debugger
-        //let editor = $('.ql.editor');
-        //if (editor.hasClass('ql-blank') == false) {
-        //    $('input[name="@(nameof(TodoDTO.TD_Content))"]').val(editor.html());
-        //}
-        $.ajax({
-            url: '/admin/dashboard/todo-save',
-            method: 'post',
-            data: $('form[name="todo-save-form"]').serialize(),
-            success: function (res) {
-                $('#addTaskModal').modal('hide');
-                $('#addTaskModalBody').html('');
-            },
-            error: function (err) {
-                console.err(err);
-            }
-        });
-
-
-    }
 </script>

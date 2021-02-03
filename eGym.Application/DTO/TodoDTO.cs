@@ -27,6 +27,7 @@ namespace eGym.Application.DTO
 
         public string PriorityCss { get; set; }
         public string StatusCss { get; set; }
+        public string ImportantCss { get; set; }
 
         public class ProfileConfig : Profile
         {
@@ -39,7 +40,8 @@ namespace eGym.Application.DTO
                     .ForMember(m => m.TD_Priority, o => o.MapFrom(s => (int)s.TD_Priority))
                     .ForMember(m => m.TD_Deadline, o => o.MapFrom(s => (int)s.TD_Deadline))
                     .ForMember(m => m.PriorityCss, o => o.MapFrom(s => s.TD_Priority.ToCssPriority()))
-                    .ForMember(m => m.StatusCss, o => o.MapFrom(s => EN_TodoStatus.FromID(s.TD_StatusID).ToCssStatus()));
+                    .ForMember(m => m.StatusCss, o => o.MapFrom(s => EN_TodoStatus.FromID(s.TD_StatusID).ToCssStatus()))
+                    .ForMember(m => m.ImportantCss, o => o.MapFrom(s => s.TD_Important ? " todo-task-important " : ""));
 
                 CreateMap<TodoDTO, Todo_Master>()
                     .EqualityComparison((s, d) => s.TD_ID != 0 && s.TD_ID == d.TD_ID)
