@@ -13,7 +13,7 @@ namespace eGym.Application.Services
         Task<IQueryable<Todo_Master>> ListAsync(short[] statuses = null, string searchString = null);
         Task<Todo_Master> FindAsync(int todoId);
         Task<TodoDTO> SaveAsync(TodoDTO dto = null, Todo_Master entity = null);
-        Task<bool> ToggleImportantAndPriorityAsync(int todoId, bool? isImportant = null, int? priorityId = null);
+        Task<bool> ToggleImportantAndPriorityAsync(int todoId, bool? isImportant = null, int? priorityId = null, bool? isDone = null);
     }
 
     public class TodoService : ITodoService
@@ -60,15 +60,20 @@ namespace eGym.Application.Services
             return dto;
         }
 
-        public async Task<bool> ToggleImportantAndPriorityAsync(int todoId, bool? isImportant = null, int? priorityId = null)
+        public async Task<bool> ToggleImportantAndPriorityAsync(int todoId, bool? isImportant = null, int? priorityId = null, bool? isDone = null)
         {
-            if (!isImportant.HasValue && !priorityId.HasValue) return false;
+            if (!isImportant.HasValue && !priorityId.HasValue && !isDone.HasValue) return false;
 
             var todo = await FindAsync(todoId: todoId);
             if (todo == null) return false;
 
             todo.TD_Important = isImportant ?? todo.TD_Important;
             todo.TD_Priority = priorityId.HasValue ? (TodoPriorityEnum)priorityId.Value : todo.TD_Priority;
+            todo.TD_StatusID = isDone.HasValue ?
+                (isDone.Value == true ? EN_TodoStatus.Completed.ID : EN_TodoStatus.Scheduled.ID) :
+                todo.TD_StatusID;
+            todo.TD_StatusDate = isDone.HasValue ? DateTime.Now : todo.TD_StatusDate;
+
             await _repository.UpdateAsync(todo);
             await _repository.UnitOfWork.SaveEntitiesAsync();
 

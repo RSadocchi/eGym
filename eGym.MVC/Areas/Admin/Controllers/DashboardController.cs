@@ -82,14 +82,21 @@ namespace eGym.MVC.Areas.Admin.Controllers
         [HttpGet("todo-toggle/{todoId}/important/{isImportant}")]
         public async Task<IActionResult> TodoToggleImportant(int todoId, bool isImportant)
         {
-            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: isImportant, priorityId: null);
+            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: isImportant, priorityId: null, isDone: null);
             return Ok();
         }
 
         [HttpGet("todo-toggle/{todoId}/priority/{priorityId}")]
         public async Task<IActionResult> TodoTogglePriority(int todoId, int priorityId)
         {
-            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: null, priorityId: priorityId);
+            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: null, priorityId: priorityId, isDone: null);
+            return Ok();
+        }
+
+        [HttpGet("todo-toggle/{todoId}/done/{isDone}")]
+        public async Task<IActionResult> TodoToggleDone(int todoId, bool isDone)
+        {
+            await _todoService.ToggleImportantAndPriorityAsync(todoId: todoId, isImportant: null, priorityId: null, isDone: isDone);
             return Ok();
         }
     }

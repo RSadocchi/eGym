@@ -153,6 +153,20 @@ function togglePriority(evt, todoId, priorityId) {
     });
 }
 
+function toggleDone(evt, todoId, isDone) {
+    evt.preventDefault();
+    $.ajax({
+        url: `/admin/dashboard/todo-toggle/${todoId}/done/${isDone}`,
+        method: 'get',
+        success: function (res) {
+            loadTodo();
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+
 function openTaskEditModal(data) {
     $('#addTaskModalBody').html(data);
     $('#addTaskModal').modal('show');
@@ -160,6 +174,10 @@ function openTaskEditModal(data) {
         suppressScrollX: true
     });
 }
+
+$('a.list-actions[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+    loadTodo();
+});
 
 function loadTodo() {
     let statuses = '';
@@ -224,4 +242,4 @@ function saveTodo(evt) {
 $('#addTaskModal').on('hidden.bs.modal', function (e) {
     $('#addTaskModalBody').html('');
     loadTodo();
-})
+});
