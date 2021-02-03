@@ -45,10 +45,24 @@ namespace eGym.MVC.Areas.Admin.Controllers
             return PartialView("TodoList", dtos);
         }
 
+        [HttpGet("todo-add")]
+        [HttpGet("todo-edit/{id}")]
+        public async Task<IActionResult> TodoEdit(int? id)
+        {
+            TodoDTO dto = new TodoDTO();
+            if (id.HasValue && id.Value > 0)
+            {
+                var todo = await _todoService.FindAsync(id.Value);
+                _mapper.Map(todo, new TodoDTO());
+            }
+            return PartialView("TodoEditForm", dto);
+        }
+
         [HttpPost("todo-save")]
         public async Task<IActionResult> TodoSave(TodoDTO dto)
         {
-            return Ok();
+            await _todoService.SaveAsync(dto: dto);
+            return Ok(new { success = true });
         }
     }
 }

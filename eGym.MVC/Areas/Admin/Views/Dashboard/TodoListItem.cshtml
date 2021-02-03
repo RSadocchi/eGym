@@ -16,9 +16,9 @@
         </div>
 
         <div class="todo-content">
-            <h5 class="todo-heading" data-todoHeading="Meeting with Shaun Park at 4:50pm">Meeting with Shaun Park at 4:50pm</h5>
+            <h5 class="todo-heading" data-todoHeading="@(Model.TD_Title)">@(Model.TD_Title)</h5>
             <p class="meta-date">@(Model.TD_CreationDate.ToString("ddd dd MMM yyyy"))</p>
-            <p class="todo-text" data-todoHtml="@(Model.TD_Content)"></p>
+            <p class="todo-text" data-todoHtml="@(Model.TD_Content)">@(Model.TD_Content)</p>
         </div>
 
         <div class="priority-dropdown custom-dropdown-icon">

@@ -93,8 +93,8 @@
     </div>
 
     <modal-container id="addTaskModal" size="lg">
-        <modal-body>
-            <partial name="~/Areas/Admin/Views/Shared/svg/feather-x.cshtml" />
+        <modal-body id="addTaskModalBody">
+            <!--<partial name="~/Areas/Admin/Views/Shared/svg/feather-x.cshtml" />
             <div class="compose-box">
                 <div class="compose-content" id="addTaskModalTitle">
                     <h5 class="">Add Task</h5>
@@ -144,22 +144,22 @@
 
                         <div class="d-flex mail-subject mb-4">
                             <partial name="~/Areas/Admin/Views/Shared/svg/feather-file-text.cshtml" />
-                            <div class="w-100">
-                                @*<div id="taskdescription" class=""></div>*@
-                                <textarea name="@(nameof(TodoDTO.TD_Content))" class="form-control" placeholder="Compose an epic..."></textarea>
+                            <div class="w-100">-->
+            @*<div id="taskdescription" class=""></div>*@
+            <!--<textarea name="@(nameof(TodoDTO.TD_Content))" class="form-control" placeholder="Compose an epic..."></textarea>
                                 <span class="validation-text"></span>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </modal-body>
 
-        <modal-footer>
-            <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
-            <button class="btn add-tsk" type="button" onclick="saveTodo(event)">Add Task</button>
-            <button class="btn edit-tsk" type="button" onclick="saveTodo(event)">Save</button>
-        </modal-footer>
+            <modal-footer>
+                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                <button class="btn add-tsk" type="button" onclick="saveTodo(event)">Add Task</button>
+                <button class="btn edit-tsk" type="button" onclick="saveTodo(event)">Save</button>
+            </modal-footer>-->
+        </modal-body>
     </modal-container>
 
 </div>
@@ -168,6 +168,27 @@
 
     $(function () {
         loadTodo();
+    });
+
+    $('#addTask').on('click', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/admin/dashboard/todo-add',
+            method: 'get',
+            success: function (res) {
+                $('#addTaskModalBody').html(res);
+                $('.add-tsk').show();
+                $('.edit-tsk').hide();
+                $('#addTaskModal').modal('show');
+                const ps = new PerfectScrollbar('.todo-box-scroll', {
+                    suppressScrollX: true
+                });
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
     });
 
     function loadTodo() {
@@ -202,19 +223,19 @@
         //if (editor.hasClass('ql-blank') == false) {
         //    $('input[name="@(nameof(TodoDTO.TD_Content))"]').val(editor.html());
         //}
-
         $.ajax({
             url: '/admin/dashboard/todo-save',
             method: 'post',
             data: $('form[name="todo-save-form"]').serialize(),
             success: function (res) {
-
+                $('#addTaskModal').modal('hide');
+                $('#addTaskModalBody').html('');
             },
             error: function (err) {
                 console.err(err);
             }
         });
-        
+
 
     }
 </script>

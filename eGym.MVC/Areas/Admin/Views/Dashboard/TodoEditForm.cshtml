@@ -1,0 +1,68 @@
+﻿@model TodoDTO
+@{
+    Layout = null;
+}
+<partial name="~/Areas/Admin/Views/Shared/svg/feather-x.cshtml" />
+<div class="compose-box">
+    <div class="compose-content" id="addTaskModalTitle">
+        <h5 class="">Add Task</h5>
+        <form name="todo-save-form">
+            <input type="hidden" asp-for="TD_ID" />
+            <input type="hidden" asp-for="TD_CreationDate" />
+            <input type="hidden" asp-for="TD_Deadline" />
+            <input type="hidden" asp-for="TD_StatusID" />
+            <div class="row">
+                <div class="col-md-12 d-flex flex-row justify-content-around align-items-center">
+                    <div class="mb-4">
+                        <div class="n-chk d-flex flex-row justify-content-start align-items-center">
+                            <label class="switch s-icons s-outline s-outline-warning m-0">
+                                <input type="checkbox" asp-for="TD_Important" value="true">
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="new-chk-content">Important</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="n-chk">
+                            <label class="new-control new-radio new-radio-text radio-primary">
+                                <input type="radio" class="new-control-input" asp-for="TD_Priority" value="@((int)TodoPriorityEnum.Low)">
+                                <span class="new-control-indicator"></span><span class="new-radio-content">Low priority</span>
+                            </label>
+                            <label class="new-control new-radio new-radio-text radio-warning">
+                                <input type="radio" class="new-control-input" asp-for="TD_Priority" value="@((int)TodoPriorityEnum.Medium)">
+                                <span class="new-control-indicator"></span><span class="new-radio-content">Medium priority</span>
+                            </label>
+                            <label class="new-control new-radio new-radio-text radio-danger">
+                                <input type="radio" class="new-control-input" asp-for="TD_Priority" value="@((int)TodoPriorityEnum.Hight)">
+                                <span class="new-control-indicator"></span><span class="new-radio-content">Hight priority</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex mail-to mb-4">
+                        <partial name="~/Areas/Admin/Views/Shared/svg/feather-edit-3.cshtml" />
+                        <div class="w-100">
+                            <input asp-for="TD_Title" id="task" class="form-control" placeholder="Title*" required />
+                            <span class="validation-text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex mail-subject mb-4">
+                <partial name="~/Areas/Admin/Views/Shared/svg/feather-file-text.cshtml" />
+                <div class="w-100">
+                    @*<div id="taskdescription" class=""></div>*@
+                    <textarea asp-for="TD_Content" class="form-control" placeholder="Compose an epic..."></textarea>
+                    <span class="validation-text"></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<modal-footer>
+    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+    <button class="btn add-tsk" type="button" onclick="saveTodo(event)">Add Task</button>
+    <button class="btn edit-tsk" type="button" onclick="saveTodo(event)">Save</button>
+</modal-footer>
