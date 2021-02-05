@@ -1148,7 +1148,9 @@ button {
         -webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
         -ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
         transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
-        background-image: url("../../images/bg.jpg");
+        /*background-image: url("../../images/bg.jpg");*/
+        background-image: url("../../images/logo/sfondo-logo.png");
+        background-color: rgb(0,0,0);
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -1294,13 +1296,13 @@ body.is-preload #bg:before {
             margin-left: 0px !important;
         }
 
-        #header .content {
-            border-style: solid;
-            border-color: #ffffff;
-            border-top-width: 1px;
-            border-bottom-width: 1px;
-            max-width: 100%;
-        }
+    #header .content {
+        border-style: solid;
+        border-color: #ffffff;
+        border-top-width: 1px;
+        border-bottom-width: 1px;
+        max-width: 100%;
+    }
 
         #header .content .inner {
             -moz-transition: max-height 0.75s ease, padding 0.75s ease, opacity 0.325s ease-in-out;
