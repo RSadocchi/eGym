@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace eGym.Application.DTO
 {
-
     public class TodoDTO
     {
         public int TD_ID { get; set; }
