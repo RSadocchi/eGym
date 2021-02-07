@@ -51,7 +51,6 @@
 
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Anag\" />
     <Folder Include="DocRepository\Data\" />
     <Folder Include="DocRepository\Temp\" />
     <Folder Include="Resources\" />

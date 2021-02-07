@@ -249,11 +249,6 @@ namespace eGym.Core.Domain
                 e.HasData(Context.SeedData.ConfigSchemaSeedData.Sport_EventResultTypeLocalized);
             });
 
-            //builder.Entity<Todo_Master>(e =>
-            //{
-
-            //});
-
             //base.OnModelCreating(builder);
         }
 

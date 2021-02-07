@@ -9,7 +9,6 @@ namespace eGym.Core.Domain
     [Table(nameof(Anag_Master), Schema = "dbo")]
     public class Anag_Master : Entity, IAggregateRoot
     {
-        #region Db Columns
         [Key]
         public int Ang_ID { get; set; }
         /// <summary>
@@ -80,45 +79,34 @@ namespace eGym.Core.Domain
         /// Id utente del profilo di accesso
         /// </summary>
         public int? Ang_UserID { get; set; }
-        #endregion
 
-        #region Virtuals
         public virtual Athlete_Master Athlete_Master { get; set; }
         public virtual Country Country { get; set; }
         /// <summary>
         /// Indirizzi
         /// </summary>
-        public virtual ICollection<Anag_Address> Anag_Addresses { get; set; }
+        public virtual ICollection<Anag_Address> Anag_Addresses { get; set; } = new HashSet<Anag_Address>();
         /// <summary>
         /// Contatti
         /// </summary>
-        public virtual ICollection<Anag_Contact> Anag_Contacts { get; set; }
+        public virtual ICollection<Anag_Contact> Anag_Contacts { get; set; } = new HashSet<Anag_Contact>();
         /// <summary>
         /// Ruoli anagrafica
         /// </summary>
-        public virtual ICollection<Anag_MasterRole> Anag_MasterRoles { get; set; }
+        public virtual ICollection<Anag_MasterRole> Anag_MasterRoles { get; set; } = new HashSet<Anag_MasterRole>();
         /// <summary>
         /// Ruoli societari
         /// </summary>
-        public virtual ICollection<Anag_CorporateRole> Anag_CorporateRoles { get; set; }
+        public virtual ICollection<Anag_CorporateRole> Anag_CorporateRoles { get; set; } = new HashSet<Anag_CorporateRole>();
         /// <summary>
         /// Documenti
         /// </summary>
-        public virtual ICollection<Anag_Document> Anag_Documents { get; set; }
+        public virtual ICollection<Anag_Document> Anag_Documents { get; set; } = new HashSet<Anag_Document>();
 
         [NotMapped]
         public EN_Gender EN_Gender => EN_Gender.FromID(this.Ang_GenderID);
-        #endregion
 
-        #region Constructors
-        public Anag_Master()
-        {
-            Anag_Addresses = new HashSet<Anag_Address>();
-            Anag_Contacts = new HashSet<Anag_Contact>();
-            Anag_MasterRoles = new HashSet<Anag_MasterRole>();
-            Anag_CorporateRoles = new HashSet<Anag_CorporateRole>();
-            Anag_Documents = new HashSet<Anag_Document>();
-        }
-        #endregion
+        [NotMapped]
+        public string CompleteName => this.Ang_FirstName + " " + this.Ang_LastName;
     }
 }

@@ -21,15 +21,9 @@ namespace eGym.Core.Domain
         public virtual Anag_Master Anag_Master { get; set; }
         public virtual Sport_Master Sport_Master { get; set; }
 
-        public virtual ICollection<Athlete_WeightXAthlete> Athlete_WeightXAthletes { get; set; }
-        public virtual ICollection<Athlete_DivisionXAthlete> Athlete_DivisionXAthletes { get; set; }
-        public virtual ICollection<Athlete_LevelXAthlete> Athlete_LevelXAthletes { get; set; }
-
-        public Athlete_Master()
-        {
-            Athlete_WeightXAthletes = new HashSet<Athlete_WeightXAthlete>();
-            Athlete_DivisionXAthletes = new HashSet<Athlete_DivisionXAthlete>();
-            Athlete_LevelXAthletes = new HashSet<Athlete_LevelXAthlete>();
-        }
+        public virtual ICollection<Athlete_WeightXAthlete> Athlete_WeightXAthletes { get; set; } = new HashSet<Athlete_WeightXAthlete>();
+        public virtual ICollection<Athlete_DivisionXAthlete> Athlete_DivisionXAthletes { get; set; } = new HashSet<Athlete_DivisionXAthlete>();
+        public virtual ICollection<Athlete_LevelXAthlete> Athlete_LevelXAthletes { get; set; } = new HashSet<Athlete_LevelXAthlete>();
+        //public virtual ICollection<Workout_Master> Workout_Masters { get; set; } = new HashSet<Workout_Master>();
     }
 }
