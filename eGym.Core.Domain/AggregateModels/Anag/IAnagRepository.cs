@@ -18,7 +18,7 @@ namespace eGym.Core.Domain
             bool athletes = true,
             bool sports = true);
 
-        Task Load_AthleteNavigation(IEnumerable<int> athIds)
+        Task Load_AthleteNavigation(IEnumerable<int> athIds);
         #endregion
     }
 

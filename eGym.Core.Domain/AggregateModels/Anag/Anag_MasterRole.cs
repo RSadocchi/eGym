@@ -8,7 +8,6 @@ namespace eGym.Core.Domain
     [Table(nameof(Anag_MasterRole), Schema = "dbo")]
     public class Anag_MasterRole : Entity
     {
-        #region Db Columns
         [Key]
         public int AngR_ID { get; set; }
         [Column(TypeName = "date")]
@@ -17,19 +16,9 @@ namespace eGym.Core.Domain
         public DateTime? AngR_EndDate { get; set; }
         public int AngR_AnagID { get; set; }
         public short AngR_RoleID { get; set; }
-        #endregion
 
-        #region Virtuals
         public virtual Anag_Master Anag_Master { get; set; }
         [NotMapped]
         public EN_AnagMasterRole EN_AnagMasterRole => EN_AnagMasterRole.FromID(this.AngR_RoleID);
-        #endregion
-
-        #region Constructors
-        public Anag_MasterRole()
-        {
-
-        }
-        #endregion
     }
 }

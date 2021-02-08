@@ -242,6 +242,11 @@ namespace eGym.MVC
                 c.AddCollectionMappers();
 
                 c.AddProfile(new TodoDTO.ProfileConfig());
+                c.AddProfile(new DynamicRoleDTO.ProfileConfig());
+                c.AddProfile(new DocumentDTO.ProfileConfig());
+                c.AddProfile(new ContactDTO.ProfileConfig());
+                c.AddProfile(new AddressDTO.ProfileConfig());
+                c.AddProfile(new AnagDTO.ProfileConfig());
             }).CreateMapper();
             services.AddSingleton(mapper);
             #endregion

@@ -8,7 +8,6 @@ namespace eGym.Core.Domain
     [Table(nameof(Anag_Document), Schema = "dbo")]
     public class Anag_Document : Entity
     {
-        #region Db Columns
         [Key]
         public int Doc_ID { get; set; }
         [Column(TypeName = "datetime")]
@@ -33,21 +32,12 @@ namespace eGym.Core.Domain
         public short Doc_TypeID { get; set; }
         public short? Doc_EmitterID { get; set; }
         public int Doc_AnagID { get; set; }
-        #endregion
 
-        #region Virtuals
         public virtual Anag_Master Anag_Master { get; set; }
         [NotMapped]
         public EN_DocumentType EN_DocumentType => EN_DocumentType.FromID(this.Doc_TypeID);
         [NotMapped]
         public EN_DocumentEmitter EN_DocumentEmitter => this.Doc_EmitterID.HasValue ? EN_DocumentEmitter.FromID(this.Doc_EmitterID.Value) : null;
-        #endregion
-
-        #region Constructor
-        public Anag_Document()
-        {
-
-        }
-        #endregion
+        
     }
 }

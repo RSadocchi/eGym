@@ -152,7 +152,7 @@ namespace eGym.Core.Domain
 
             builder.Entity<Anag_Master>(e =>
             {
-                e.HasOne(p => p.Country).WithMany(p => p.Anag_Masters).HasForeignKey(p => p.Ang_BirthCountry).OnDelete(DeleteBehavior.NoAction);
+                e.HasOne(p => p.BirthCountry).WithMany(p => p.Anag_Masters).HasForeignKey(p => p.Ang_BirthCountry).OnDelete(DeleteBehavior.NoAction);
 
                 //e.Property(p => p.Ang_FirstName)
                 //    .HasConversion(

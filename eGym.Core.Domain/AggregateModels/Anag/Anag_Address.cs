@@ -8,7 +8,6 @@ namespace eGym.Core.Domain
     [Table(nameof(Anag_Address), Schema = "dbo")]
     public class Anag_Address : Entity
     {
-        #region Db Columns
         [Key]
         public int Adr_ID { get; set; }
         [Required]
@@ -41,19 +40,10 @@ namespace eGym.Core.Domain
         [MaxLength(3)]
         public string Adr_Country { get; set; }
         public int Adr_AnagID { get; set; }
-        #endregion
 
-        #region Virtuals
         public virtual Anag_Master Anag_Master { get; set; }
         public virtual Country Country { get; set; }
-        public virtual ICollection<Anag_AddressRole> Anag_AddressRoles { get; set; }
-        #endregion
+        public virtual ICollection<Anag_AddressRole> Anag_AddressRoles { get; set; } = new HashSet<Anag_AddressRole>();
 
-        #region Constructors
-        public Anag_Address()
-        {
-            Anag_AddressRoles = new HashSet<Anag_AddressRole>();
-        }
-        #endregion
     }
 }
