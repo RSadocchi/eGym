@@ -20,3 +20,6 @@
   .important-star-container.todo-task-important .important-star {
     display: block;
     visibility: visible; }
+
+.c-pointer {
+  cursor: pointer; }

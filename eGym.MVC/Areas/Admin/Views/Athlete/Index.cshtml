@@ -1,21 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
 }
 
-<div class="card component-card_4">
-    <div class="card-body">
-        <div class="user-profile">
-            <img src="assets/img/90x90.jpg" class="" alt="...">
-        </div>
-        <div class="user-info">
-            <h5 class="card-user_name">Luke Ivory</h5>
-            <p class="card-user_occupation">Manager</p>
-            <div class="card-star_rating">
-                <span class="badge badge-primary">4.5</span>
+<div class="col-xl-12 col-lg-12 col-md-12">
+    <div class="mail-box-container flex-column py-md-3 px-md-4">
+
+        <h2>Athletes</h2>
+
+        <div class="row align-items-stretch">
+            <div class="col-12 col-md-4 col-lg-3 p-3">
+                <div class="card card-dark component-card_4 h-100">
+                    <div class="card-body ">
+                        <div class="user-profile ">
+                            <img src="~/images/avatar/" onerror="this.onerror = null; this.src = '/images/placeholders/90x90.jpg';" class="" alt="...">
+                        </div>
+                        <div class="user-info">
+                            <h3 class="">Amilcare Brumotti</h3>
+                            <p class="card-user_occupation">
+                                <span class="badge badge-primary mr-2">Affiliate</span>
+                                <span class="badge badge-primary mr-2">Customer</span>
+                                <span class="badge badge-primary mr-2">Sponsor</span>
+                                <span class="badge badge-info mr-2">Secretary</span>
+                            </p>
+                            <p class="card-user_occupation">
+                                <!--d-flex justify-content-between-->
+                                <span class="badge badge-dark mr-2 mb-1">MMA [6-1-2]</span>
+                                @*<span>
+                                        <span class="badge badge-success"> 6 </span>
+                                        <span class="text-white">-</span>
+                                        <span class="badge badge-warning"> 1 </span>
+                                        <span class="text-white">-</span>
+                                        <span class="badge badge-danger"> 2 </span>
+                                    </span>*@
+                                <span class="badge badge-dark mr-2 mb-1">Pankration [12-0-5]</span>
+                                <span class="badge badge-dark mr-2 mb-1">Functional Training</span>
+                            </p>
+                            @*<p class="card-user_occupation d-flex justify-content-between">
+                                    <span class="badge badge-dark mr-2">Pankration</span>
+                                    <span>
+                                        <span class="badge badge-success"> 6 </span>
+                                        <span class="text-white">-</span>
+                                        <span class="badge badge-warning"> 1 </span>
+                                        <span class="text-white">-</span>
+                                        <span class="badge badge-danger"> 2 </span>
+                                    </span>
+                                </p>
+                                <p class="card-user_occupatio  d-flex justify-content-betweenn">
+                                    <span class="badge badge-dark mr-2">Functional Training</span>
+                                </p>*@
+                            <div class="d-flex justify-content-end px-4">
+                                <div class="c-pointer" onclick="alert('info!!!')">
+                                    <partial name="~/Areas/Admin/Views/Shared/svg/feather-info.cshtml" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p class="card-text"> Maecenas nec mi vel lacus condimentum rhoncus dignissim egestas orci. Integer blandit porta placerat. Vestibulum in ultricies. </p>
         </div>
     </div>
+</div>
+
+
+
+<div class="paginating-container pagination-default">
+    <ul class="pagination">
+        <li class="prev"><a href="javascript:void(0);">Prev</a></li>
+        <li><a href="javascript:void(0);">1</a></li>
+        <li class="active"><a href="javascript:void(0);">2</a></li>
+        <li><a href="javascript:void(0);">3</a></li>
+        <li class="next"><a href="javascript:void(0);">Next</a></li>
+    </ul>
 </div>

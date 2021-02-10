@@ -196,6 +196,10 @@ span.red {
   border-radius: 6px;
   background: #0e1726; }
 
+    .card.card-dark {
+        background: #060818 !important;
+    }
+
 /*      Form Group Label       */
 .form-group label, label {
   font-size: 15px;

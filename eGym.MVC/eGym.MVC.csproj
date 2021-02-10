@@ -54,6 +54,7 @@
     <Folder Include="DocRepository\Data\" />
     <Folder Include="DocRepository\Temp\" />
     <Folder Include="Resources\" />
+    <Folder Include="wwwroot\images\avatar\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,7 +8,6 @@ namespace eGym.Core.Domain
     [Table(nameof(Country), Schema = "conf")]
     public partial class Country : Entity, IAggregateRoot
     {
-        #region Db Columns
         [Key] 
         [Column(TypeName = "char(3)")]
         [MaxLength(3)] 
@@ -20,19 +19,10 @@ namespace eGym.Core.Domain
         [MaxLength(5)] 
         public string Country_Language { get; set; }
         public string Country_CFiscCode { get; set; }
-        #endregion
 
-        #region Virtuals
-        public virtual ICollection<Anag_Master> Anag_Masters { get; set; }
-        public virtual ICollection<Anag_Address> Anag_Addresses { get; set; }
-        #endregion
+        public virtual ICollection<Anag_Master> Anag_MasterBirthCountries { get; set; } = new HashSet<Anag_Master>();
+        public virtual ICollection<Anag_Master> Anag_MasterCitizenships { get; set; } = new HashSet<Anag_Master>();
+        public virtual ICollection<Anag_Address> Anag_Addresses { get; set; } = new HashSet<Anag_Address>();
 
-        #region Constructors
-        public Country()
-        {
-            Anag_Masters = new HashSet<Anag_Master>();
-            Anag_Addresses = new HashSet<Anag_Address>();
-        }
-        #endregion
     }
 }

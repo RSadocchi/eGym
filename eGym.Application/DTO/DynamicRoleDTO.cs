@@ -60,7 +60,7 @@ namespace eGym.Application.DTO
                     .ForMember(m => m.EndDate, o => o.MapFrom(s => s.AdrR_EndDate))
                     .ForMember(m => m.EnumLabel, o => o.MapFrom(s => EN_AddressRole.FromID(s.AdrR_RoleID).Code));
                 CreateMap<DynamicRoleDTO, Anag_AddressRole>()
-                    .EqualityComparison((s, d) => s.ID != 0 && s.ID == d.CR_ID)
+                    .EqualityComparison((s, d) => s.ID != 0 && s.ID == d.AdrR_ID)
                     .ForMember(m => m.AdrR_ID, o => o.Ignore())
                     .ForMember(m => m.AdrR_AddressID, o => o.MapFrom(s => s.EntityMasterID))
                     .ForMember(m => m.AdrR_RoleID, o => o.MapFrom(s => s.EnumID))

@@ -193,6 +193,7 @@ namespace eGym.MVC
 
             #region Services
             services.AddTransient<ITodoService, TodoService>();
+            services.AddTransient<IAnagService, AnagService>();
             #endregion
 
             #endregion
