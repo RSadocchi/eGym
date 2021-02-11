@@ -1,0 +1,130 @@
+﻿@model AnagDTO
+@{
+
+}
+<style>
+    .dropify-preview {
+        background-color: #0e1726 !important;
+    }
+</style>
+@*<div class="account-content">
+        <div class="scrollspy-example" data-spy="scroll" data-target="#account-settings-scroll" data-offset="-100">
+            <div class="row">
+
+            </div>
+        </div>
+    </div>*@
+<div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
+    <form id="general-info" class="section general-info">
+        <div class="info">
+            <h5 class="text-uppercase">General Info</h5>
+            <div class="row">
+                <div class="col-lg-11 mx-auto">
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-12 col-md-4">
+                            <div class="upload mt-4 pr-md-4">
+                                <label asp-for="Ang_Avatar">Avatar</label>
+                                <input asp-for="Ang_Avatar" type="file" class="dropify" id="input-file-max-fs" data-max-file-size="2M" data-default-file="/images/placeholders/200x200.jpg" />
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label asp-for="Anag_MasterRoles">Roles *</label>
+                                        <select name="roleIds" class="selectpicker form-control mb-4" multiple title="Select a role">
+                                            @foreach (var role in EN_AnagMasterRole.GetAll())
+                                            {
+                                                <option value="@(role.ID)">@(role.Code)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label asp-for="Anag_CorporateRoles">Corporate roles</label>
+                                        <select name="corporateRoleIds" class="selectpicker form-control mb-4" multiple title="Select a role*">
+                                            @foreach (var role in EN_CorporateRole.GetAll())
+                                            {
+                                                <option value="@(role.ID)">@(role.Code)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_FirstName">First Name *</label>
+                                            <input asp-for="Ang_FirstName" type="text" class="form-control mb-4" placeholder="First Name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_LastName">Last Name *</label>
+                                            <input asp-for="Ang_LastName" type="text" class="form-control mb-4" placeholder="Last Name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_GenderID">Gender *</label>
+                                            <select asp-for="Ang_GenderID" class="selectpicker form-control" title="Select">
+                                                @foreach(var gender in EN_Gender.GetAll())
+                                                {
+                                                    <option value="@(gender.ID)">@(gender.Code)</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_TaxCode">Personal fiscal code *</label>
+                                            <input asp-for="Ang_TaxCode" type="text" class="form-control mb-4" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_Citizenship">Citizenship</label>
+                                            <input asp-for="Ang_Citizenship" type="text" class="form-control mb-4" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_BirthCity">City of Birth</label>
+                                            <input asp-for="Ang_BirthCity" type="text" class="form-control mb-4" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_BirthDate">Date of Birth</label>
+                                            <input asp-for="Ang_BirthDate" type="text" class="form-control mb-4" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_BirthCountry">Country of Birth</label>
+                                            <input asp-for="Ang_BirthCountry" type="text" class="form-control mb-4" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label asp-for="Ang_BirthCountrySpec">Province of Birth</label>
+                                            <input asp-for="Ang_BirthCountrySpec" type="text" class="form-control mb-4" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(function () {
+        $('#@(nameof(AnagDTO.Ang_BirthDate))').inputmask("dd/mm/yyyy");
+    });
+</script>

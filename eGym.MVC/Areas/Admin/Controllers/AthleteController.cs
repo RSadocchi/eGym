@@ -41,5 +41,17 @@ namespace eGym.MVC.Areas.Admin.Controllers
             return Ok(dtos);
         }
 
+        [HttpGet("new")]
+        [HttpGet("edit/{angId}")]
+        public async Task<IActionResult> Edit(int? angId)
+        {
+            var dto = new AnagDTO();
+            if (angId.HasValue)
+            {
+
+            }
+
+            return View("Edit", dto);
+        }
     }
 }

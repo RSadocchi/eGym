@@ -24,17 +24,17 @@ namespace eGym.Core.Domain
         [MaxLength(30)]
         public string Ang_VATNo { get; set; }
         [Column(TypeName = "date")]
-        public DateTime Ang_BirthDate { get; set; }
-        [Required]
+        public DateTime? Ang_BirthDate { get; set; }
+        //[Required]
         [MaxLength(150)]
         public string Ang_BirthCity { get; set; }
-        [Required]
+        //[Required]
         [MaxLength(5)]
         public string Ang_BirthCountrySpec { get; set; }
-        [Required]
+        //[Required]
         [MaxLength(3)]
         public string Ang_BirthCountry { get; set; }
-        [Required]
+        //[Required]
         [MaxLength(3)]
         public string Ang_Citizenship { get; set; }
         public string Ang_Avatar { get; set; }

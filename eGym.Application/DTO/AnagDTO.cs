@@ -21,17 +21,13 @@ namespace eGym.Application.DTO
         public string Ang_TaxCode { get; set; }
         [MaxLength(30)]
         public string Ang_VATNo { get; set; }
-        public DateTime Ang_BirthDate { get; set; }
-        [Required]
+        public DateTime? Ang_BirthDate { get; set; }
         [MaxLength(150)]
         public string Ang_BirthCity { get; set; }
-        [Required]
         [MaxLength(5)]
         public string Ang_BirthCountrySpec { get; set; }
-        [Required]
         [MaxLength(3)]
         public string Ang_BirthCountry { get; set; }
-        [Required]
         [MaxLength(3)]
         public string Ang_Citizenship { get; set; }
         public string Ang_Avatar { get; set; }
