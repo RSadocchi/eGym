@@ -15,9 +15,70 @@
         </div>
     </div>*@
 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-    <form id="general-info" class="section general-info">
+    <form id="general-info" name="general-info" class="section general-info">
+        @if (Model.Anag_MasterRoles?.Count() > 0)
+        {
+            for (var i = 0; i < Model.Anag_MasterRoles.Count(); i++)
+            {
+                <input type="hidden"
+                       data-role-type="anag"
+                       data-role-id="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                       name="@($"{nameof(AnagDTO.Anag_MasterRoles)}[{i}].{nameof(DynamicRoleDTO.ID)}")"
+                       value="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().ID)" />
+                <input type="hidden"
+                       data-role-type="anag"
+                       data-role-id="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                       name="@($"{nameof(AnagDTO.Anag_MasterRoles)}[{i}].{nameof(DynamicRoleDTO.EntityMasterID)}")"
+                       value="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().EntityMasterID)" />
+                <input type="hidden"
+                       data-role-type="anag"
+                       data-role-id="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                       name="@($"{nameof(AnagDTO.Anag_MasterRoles)}[{i}].{nameof(DynamicRoleDTO.EnumID)}")"
+                       value="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().EnumID)" />
+                <input type="hidden"
+                       data-role-type="anag"
+                       data-role-id="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                       name="@($"{nameof(AnagDTO.Anag_MasterRoles)}[{i}].{nameof(DynamicRoleDTO.StartDate)}")"
+                       value="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().StartDate.ToString("yyyy-MM-dd"))" />
+                @*<input type="hidden"
+                    data-role-type="anag"
+                    data-role-id="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                    name="@($"{nameof(AnagDTO.Anag_MasterRoles)}[{i}].{nameof(DynamicRoleDTO.EndDate)}")"
+                    value="@(Model.Anag_MasterRoles.Skip(i).FirstOrDefault().EndDate?.ToString("yyyy-MM-dd"))" />*@
+            }
+        }
+        @if (Model.Anag_CorporateRoles?.Count() > 0)
+        {
+            for (var i = 0; i < Model.Anag_MasterRoles.Count(); i++)
+            {
+                <input type="hidden"
+                       data-role-type="corporate"
+                       data-role-id="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                       name="@($"{nameof(AnagDTO.Anag_CorporateRoles)}[{i}].{nameof(DynamicRoleDTO.ID)}")"
+                       value="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().ID)" />
+                <input type="hidden"
+                       data-role-type="corporate"
+                       data-role-id="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                       name="@($"{nameof(AnagDTO.Anag_CorporateRoles)}[{i}].{nameof(DynamicRoleDTO.EntityMasterID)}")"
+                       value="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().EntityMasterID)" />
+                <input type="hidden"
+                       data-role-type="corporate"
+                       data-role-id="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                       name="@($"{nameof(AnagDTO.Anag_CorporateRoles)}[{i}].{nameof(DynamicRoleDTO.EnumID)}")"
+                       value="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().EnumID)" />
+                <input type="hidden"
+                       data-role-type="corporate"
+                       data-role-id="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                       name="@($"{nameof(AnagDTO.Anag_CorporateRoles)}[{i}].{nameof(DynamicRoleDTO.StartDate)}")"
+                       value="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().StartDate.ToString("yyyy-MM-dd"))" />
+                @*<input type="hidden"
+                    data-role-type="corporate"
+                    data-role-id="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().EntityMasterID)"
+                    name="@($"{nameof(AnagDTO.Anag_CorporateRoles)}[{i}].{nameof(DynamicRoleDTO.EndDate)}")"
+                    value="@(Model.Anag_CorporateRoles.Skip(i).FirstOrDefault().EndDate?.ToString("yyyy-MM-dd"))" />*@
+            }
+        }
         <div class="info">
-            <h5 class="text-uppercase">General Info</h5>
             <div class="row">
                 <div class="col-lg-11 mx-auto">
                     <div class="row">
@@ -28,11 +89,12 @@
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                            <h5 class="text-uppercase">General Info</h5>
                             <div class="form">
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <label asp-for="Anag_MasterRoles">Roles *</label>
-                                        <select name="roleIds" class="selectpicker form-control mb-4" multiple title="Select a role">
+                                        <select name="roleIds" class="selectpicker form-control mb-4" multiple required title="Select a role" onchange="onRolesChange(event)">
                                             @foreach (var role in EN_AnagMasterRole.GetAll())
                                             {
                                                 <option value="@(role.ID)">@(role.Code)</option>
@@ -53,13 +115,13 @@
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label asp-for="Ang_FirstName">First Name *</label>
-                                            <input asp-for="Ang_FirstName" type="text" class="form-control mb-4" placeholder="First Name" />
+                                            <input asp-for="Ang_FirstName" type="text" class="form-control mb-4" required placeholder="First Name" />
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label asp-for="Ang_LastName">Last Name *</label>
-                                            <input asp-for="Ang_LastName" type="text" class="form-control mb-4" placeholder="Last Name" />
+                                            <input asp-for="Ang_LastName" type="text" class="form-control mb-4" required placeholder="Last Name" />
                                         </div>
                                     </div>
                                 </div>
@@ -67,8 +129,8 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label asp-for="Ang_GenderID">Gender *</label>
-                                            <select asp-for="Ang_GenderID" class="selectpicker form-control" title="Select">
-                                                @foreach(var gender in EN_Gender.GetAll())
+                                            <select asp-for="Ang_GenderID" class="selectpicker form-control" required title="Select">
+                                                @foreach (var gender in EN_Gender.GetAll())
                                                 {
                                                     <option value="@(gender.ID)">@(gender.Code)</option>
                                                 }
@@ -78,7 +140,7 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label asp-for="Ang_TaxCode">Personal fiscal code *</label>
-                                            <input asp-for="Ang_TaxCode" type="text" class="form-control mb-4" />
+                                            <input asp-for="Ang_TaxCode" type="text" required class="form-control mb-4" />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -101,7 +163,7 @@
                                             <input asp-for="Ang_BirthDate" type="text" class="form-control mb-4" />
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label asp-for="Ang_BirthCountry">Country of Birth</label>
@@ -118,6 +180,52 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-12 col-md-4"></div>
+                        <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                            <hr />
+                            <h5 class="text-uppercase">Contacts</h5>
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="hidden" name="Anag_Contacts[0].Cnt_ID" value="0" />
+                                        <input type="hidden" name="Anag_Contacts[0].Cnt_AnagID" value="@(Model.Ang_ID)" />
+                                        <input type="hidden" name="Anag_Contacts[0].Cnt_TypeID" value="@(EN_ContactType.Email.ID)" />
+                                        <input type="hidden" name="Anag_Contacts[0].Cnt_DefaultInType" value="true" />
+                                        <div class="form-group">
+                                            <label name="Anag_Contacts[0].Cnt_Value">Email *</label>
+                                            <input type="email" name="Anag_Contacts[0].Cnt_Value" required class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="hidden" name="Anag_Contacts[1].Cnt_ID" value="0" />
+                                        <input type="hidden" name="Anag_Contacts[1].Cnt_AnagID" value="@(Model.Ang_ID)" />
+                                        <input type="hidden" name="Anag_Contacts[1].Cnt_TypeID" value="@(EN_ContactType.Mobile.ID)" />
+                                        <input type="hidden" name="Anag_Contacts[1].Cnt_DefaultInType" value="true" />
+                                        <div class="form-group">
+                                            <label name="Anag_Contacts[1].Cnt_Value">Mobile *</label>
+                                            <input type="email" name="Anag_Contacts[1].Cnt_Value" required class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-12 col-md-4"></div>
+                        <div class="col-xl-10 col-lg-12 col-md-8 mt-md-0 mt-4">
+                            <hr />
+                            <h5 class="text-uppercase">Residential address</h5>
+                            <div class="form">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Address</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,5 +234,85 @@
 <script>
     $(function () {
         $('#@(nameof(AnagDTO.Ang_BirthDate))').inputmask("dd/mm/yyyy");
+
+        let roles = [];
+        @foreach(var role in Model.Anag_MasterRoles)
+        {
+    <text>roles.push(@(role.EnumID));</text>
+        }
+        if (roles && roles.length > 0) {
+            $('select[name="roleIds"]').val(roles.map(t => `${t}`));
+        }
+
+        let corporateRoles = [];
+        @foreach(var role in Model.Anag_CorporateRoles)
+        {
+    <text>corporateRoles.push(@(role.EnumID));</text>
+        }
+        if (corporateRoles && corporateRoles.length > 0) {
+            $('select[name="corporateRoleIds"]').val(corporateRoles.map(t => `${t}`));
+        }
     });
+
+    function onRolesChange(evt) {
+        let roleType = 'anag';
+        let selected = ($(`select[name="roleIds"]`).val() || []).map(t => +t);
+
+        for (let i = 0; i < selected.length; i++) {
+            if ($(`input[type="hidden"][data-role-type="${roleType}"][data-role-id="${selected[i]}"]`).length) {
+                //trovato
+            }
+            else {
+                //va aggiunto
+                $('form[name="general-info"]')
+                    .append(`<input type="hidden" data-role-type="${roleType}" data-role-id="${selected[i]}" name="@(nameof(AnagDTO.Anag_MasterRoles))[${i}].@(nameof(DynamicRoleDTO.ID))" value="0" />`);
+                $('form[name="general-info"]')
+                    .append(`<input type="hidden" data-role-type="${roleType}" data-role-id="${selected[i]}" name="@(nameof(AnagDTO.Anag_MasterRoles))[${i}].@(nameof(DynamicRoleDTO.EntityMasterID))" value="@(Model.Ang_ID)" />`);
+                $('form[name="general-info"]')
+                    .append(`<input type="hidden" data-role-type="${roleType}" data-role-id="${selected[i]}" name="@(nameof(AnagDTO.Anag_MasterRoles))[${i}].@(nameof(DynamicRoleDTO.EnumID))" value="${selected[i]}" />`);
+                $('form[name="general-info"]')
+                    .append(`<input type="hidden" data-role-type="${roleType}" data-role-id="${selected[i]}" name="@(nameof(AnagDTO.Anag_MasterRoles))[${i}].@(nameof(DynamicRoleDTO.StartDate))" value="@($"{DateTime.Today:yyyy-MM-dd}")" />`);
+            }
+        }
+
+        $(`input[type="hidden"][data-role-type="${roleType}"]`).each(function () {
+            let roleId = +$(this).attr('data-role-id');
+            if (selected.indexOf(roleId) < 0) {
+                $(this).remove();
+            }
+        });
+    }
+
+    function onCorporateRolesChange(evt) {
+        let roleType = 'corporate';
+        let selected = ($(`select[name="corporateRoleIds"]`).val() || []).map(t => +t);
+
+        for (let i = 0; i < selected.length; i++) {
+            if ($(`input[type="hidden"][data-role-type="${roleType}"][data-role-id="${selected[i]}"]`).length) {
+                //trovato
+            }
+            else {
+                //va aggiunto
+                $('form[name="general-info"]')
+                    .append(`<input type="hidden" data-role-type="${roleType}" data-role-id="${selected[i]}" name="@(nameof(AnagDTO.Anag_CorporateRoles))[${i}].@(nameof(DynamicRoleDTO.ID))" value="0" />`);
+                $('form[name="general-info"]')
+                    .append(`<input type="hidden" data-role-type="${roleType}" data-role-id="${selected[i]}" name="@(nameof(AnagDTO.Anag_CorporateRoles))[${i}].@(nameof(DynamicRoleDTO.EntityMasterID))" value="@(Model.Ang_ID)" />`);
+                $('form[name="general-info"]')
+                    .append(`<input type="hidden" data-role-type="${roleType}" data-role-id="${selected[i]}" name="@(nameof(AnagDTO.Anag_CorporateRoles))[${i}].@(nameof(DynamicRoleDTO.EnumID))" value="${selected[i]}" />`);
+                $('form[name="general-info"]')
+                    .append(`<input type="hidden" data-role-type="${roleType}" data-role-id="${selected[i]}" name="@(nameof(AnagDTO.Anag_CorporateRoles))[${i}].@(nameof(DynamicRoleDTO.StartDate))" value="@($"{DateTime.Today:yyyy-MM-dd}")" />`);
+            }
+        }
+
+        $(`input[type="hidden"][data-role-type="${roleType}"]`).each(function () {
+            let roleId = +$(this).attr('data-role-id');
+            if (selected.indexOf(roleId) < 0) {
+                $(this).remove();
+            }
+        });
+    }
+
+    function saveGeneralInfo(evt) {
+
+    }
 </script>

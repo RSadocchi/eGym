@@ -1,0 +1,48 @@
+﻿@model AddressDTO
+@{
+    Layout = null;
+}
+<div class="form">
+    <input type="hidden" asp-for="Adr_ID" />
+    <input type="hidden" asp-for="Adr_AnagID" />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label asp-for="Adr_Address"></label>
+                <input asp-for="Adr_Address" class="form-control" required />
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label asp-for="Adr_Address1"></label>
+                <input asp-for="Adr_Address1" class="form-control" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="Adr_City"></label>
+                <input asp-for="Adr_City" class="form-control" required />
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label asp-for="Adr_PostalCode"></label>
+                <input asp-for="Adr_PostalCode" class="form-control" required />
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label asp-for="Adr_CountrySpec"></label>
+                <input asp-for="Adr_CountrySpec" class="form-control" required />
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label asp-for="Adr_Country"></label>
+                <select asp-for="Adr_Country" class="selectpicker form-control" required>
+
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
